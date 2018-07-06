@@ -1,0 +1,90 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url "http://repo.springsource.org/plugins-release" }
+    }
+
+    dependencies {
+        classpath(
+                "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}",
+                "io.spring.gradle:propdeps-plugin:${springGradleVersion}"
+        )
+    }
+}
+
+subprojects {
+    group = 'com.cncj'
+    version = ''
+    buildDir = "../libs/out/${project.name}"
+
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'propdeps-idea'
+
+    [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
+
+    repositories {
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        maven { url "http://maven.oschina.net/content/groups/public/" }
+        mavenCentral()
+    }
+
+    dependencies {
+        testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
+    }
+}
+
+
+project(':libs') {
+    apply plugin: 'war'
+    dependencies {
+        compile(
+                /*  javaEE 依赖   */
+                "javax.mail:mail:${javaxMailVersion}",
+                "javax.xml.bind:jaxb-api:${javaXmlBindVersion}", //#解决因java9模块化产生的找不到类的异常
+                "com.sun.xml.bind:jaxb-core:${javaXmlBindVersion}", //#解决因java9模块化产生的找不到类的异常
+                "com.sun.xml.bind:jaxb-impl:${javaXmlBindVersion}", //#解决因java9模块化产生的找不到类的异常
+
+
+                "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}",
+//                "org.springframework.boot:spring-boot-starter-security:${springBootVersion}",
+                "org.springframework.boot:spring-boot-starter-thymeleaf:${springBootVersion}",
+//                "org.thymeleaf.extras:thymeleaf-extras-springsecurity4:${thymeleafExtrasVersion}",
+                "org.springframework.boot:spring-boot-starter-web:${springBootVersion}",
+                "org.springframework.boot:spring-boot-starter-web-services:${springBootVersion}",
+//                "org.springframework.security.oauth:spring-security-oauth2:${springOauth2Version}",
+                "org.jsoup:jsoup:${jsoupVersion}",
+                "com.alibaba:fastjson:${alibabaFastJsonVersion}",
+
+                "org.postgresql:postgresql:${postgresqlVersion}",
+
+                "org.apache.commons:commons-lang3:${commonLang}",
+                "com.belerweb:pinyin4j:${pinyin4jVersion}", // 中文拼音
+        )
+    }
+}
+
+project(':core') {
+    dependencies {
+        compileClasspath project(':libs')
+        testCompile project(':libs')
+    }
+}
+project(':web') {
+    apply plugin: 'war'
+    apply plugin: 'org.springframework.boot'
+    dependencies {
+        implementation project(':core')
+        compileClasspath project(':libs')
+        testCompile project(':core')
+        testCompile project(':libs')
+    }
+}
+project(':passport') {
+    apply plugin: 'war'
+    apply plugin: 'org.springframework.boot'
+    dependencies {
+        compileClasspath project(':libs')
+        testCompile project(':libs')
+    }
+}

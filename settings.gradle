@@ -1,0 +1,5 @@
+rootProject.name = 'tech'
+include 'core'
+include 'web'
+include 'libs'
+include 'passport'
