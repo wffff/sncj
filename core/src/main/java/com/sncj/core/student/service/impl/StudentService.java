@@ -41,7 +41,7 @@ public class StudentService implements IStudentService {
 
     @Override
     public List<StudentEntity> create(StudentEntity student) {
-        StudentEntity save = iStudentRepository.create(student);
+        StudentEntity save = iStudentRepository.save(student);
         return List.of(save);
     }
 }
