@@ -38,4 +38,10 @@ public class StudentService implements IStudentService {
     public Page<StudentEntity> findAll(BasePage basePage, StudentEntity studentEntity) {
         return iStudentRepository.findAll(condition(studentEntity),basePage.getRequestPage());
     }
+
+    @Override
+    public List<StudentEntity> create(StudentEntity student) {
+        StudentEntity save = iStudentRepository.create(student);
+        return List.of(save);
+    }
 }

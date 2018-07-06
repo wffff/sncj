@@ -1,27 +1,12 @@
 .gradle
 .idea
-/build/
-!gradle/wrapper/gradle-wrapper.jar
-
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
+/build
+/*/build
 /out/
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
+/*/out/
+/*.iml
+/*/*.iml
+/pm/src/main/resources/rebel.xml
+/jrebel*
+#/.gitignore
+web/

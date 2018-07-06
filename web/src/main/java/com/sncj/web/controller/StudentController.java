@@ -26,4 +26,10 @@ public class StudentController {
         Page<StudentEntity> page1 = iStudentService.findAll(basePage, student);
         return ReturnMessage.success((int) page1.getTotalElements(), page1.getContent());
     }
+    @RequestMapping("/create")
+    @ResponseBody
+    public ReturnMessage<List<StudentEntity>> Create(StudentEntity student) {
+        List<StudentEntity> list = iStudentService.create(student);
+        return ReturnMessage.success(list.size(),list);
+    }
 }
