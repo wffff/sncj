@@ -22,21 +22,10 @@ public class StudentService implements IStudentService {
     @Resource
     private IStudentRepository iStudentRepository;
 
-    private Specification<StudentEntity> condition(StudentEntity student) {
-
-        return (root, query, cb) -> {
-
-            List<Predicate> predicates = new ArrayList<>();
-            if (null != student) {
-                if (RegexUtils.notNull(student.getName())) predicates.add(cb.equal(root.get("name"), student.getName()));
-            }
-            return cb.and(predicates.toArray(new Predicate[predicates.size()]));
-        };
-    }
 
     @Override
     public Page<StudentEntity> findAll(BasePage basePage, StudentEntity studentEntity) {
-        return iStudentRepository.findAll(condition(studentEntity),basePage.getRequestPage());
+        return iStudentRepository.findAllStudent(basePage,studentEntity);
     }
 
     @Override
