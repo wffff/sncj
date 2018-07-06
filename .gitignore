@@ -2,8 +2,8 @@
 .idea
 /build
 /*/build
-/out/
-/*/out/
+/out
+/*/out
 /*.iml
 /*/*.iml
 /pm/src/main/resources/rebel.xml
