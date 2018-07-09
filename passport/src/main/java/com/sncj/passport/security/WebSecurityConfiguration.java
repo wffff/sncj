@@ -25,16 +25,16 @@ public class WebSecurityConfiguration {
     protected static class UserSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         @Autowired
-        private UserDetailsService userDetailsService;
-        @Autowired
-        private PreAuthenticatedAuthenticationProvider preAuthenticatedAuthenticationProvider;
+        private UserDetailsService userService;
+//        @Autowired
+//        private PreAuthenticatedAuthenticationProvider preAuthenticatedAuthenticationProvider;
 
         @Override
         protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
             auth
-                    .authenticationProvider(preAuthenticatedAuthenticationProvider)
-                    .userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
+//                    .authenticationProvider(preAuthenticatedAuthenticationProvider)
+                    .userDetailsService(userService).passwordEncoder(new BCryptPasswordEncoder());
         }
 
         @Bean
