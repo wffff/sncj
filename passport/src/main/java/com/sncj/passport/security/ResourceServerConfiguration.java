@@ -16,33 +16,40 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
     private Logger logger = LoggerFactory.getLogger(ResourceServerConfiguration.class);
-    private static final String DEMO_RESOURCE_ID = "SNCJ";
+    private static final String RESOURCE_ID = "SNCJ";
 
     @Autowired
-    private CustomAuthenticationEntryPoint customAuthenticationEntryPoint ;
+    private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
     @Bean
-    public CustomLogoutSuccessHandler customLogoutSuccessHandler(){
+    public CustomLogoutSuccessHandler customLogoutSuccessHandler() {
         return new CustomLogoutSuccessHandler();
-    } ;
+    }
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) {
-        resources.resourceId(DEMO_RESOURCE_ID).stateless(true);
+        resources.resourceId(RESOURCE_ID).stateless(true);
     }
+
     @Override
     public void configure(HttpSecurity http) throws Exception {
-       logger.info("=========================111111111=========");
-       http.exceptionHandling()
-               .authenticationEntryPoint(customAuthenticationEntryPoint)
-               .and()
-               .logout()
-               .logoutUrl("/oauth/logout")
-               .logoutSuccessHandler(customLogoutSuccessHandler())
-               .and()
-               .authorizeRequests()
-               .antMatchers("/hello/").permitAll()
-               .antMatchers("/secure/**").authenticated();
+        logger.info("=========================111111111=========");
+        http.exceptionHandling()
+                .authenticationEntryPoint(customAuthenticationEntryPoint)
+                .and()
+                .requestMatchers()
+                .antMatchers("/api/**")
+                .and()
+                .authorizeRequests()
+                .antMatchers("/api/**")
+                .authenticated();
+//               .logout()
+//               .logoutUrl("/oauth/logout")
+//               .logoutSuccessHandler(customLogoutSuccessHandler())
+//               .and()
+//               .authorizeRequests()
+//               .antMatchers("/hello/").permitAll()
+//               .antMatchers("/secure/**").authenticated();
     }
 
 }

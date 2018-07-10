@@ -62,7 +62,7 @@ public class UserController {
         return ReturnMessage.success(all.size(), all);
     }
 
-    @RequestMapping("/secure/permission2")
+    @RequestMapping("/api/permission2")
     @ResponseBody
     public ReturnMessage<List<PermissionEntity>> sepermission2() {
         List<PermissionEntity> all = iPermissionService.findAll();
