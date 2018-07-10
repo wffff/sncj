@@ -42,7 +42,6 @@ public class OAuthClientDetails implements ClientDetails {
     @JsonProperty("refresh_token_validity")
     private Integer refreshTokenValiditySeconds;
     private Map<String, Object> additionalInformation = new LinkedHashMap<>();
-    private Long uid;
     private Integer type;
     private String site;
     private String url;
@@ -241,14 +240,6 @@ public class OAuthClientDetails implements ClientDetails {
     @JsonAnyGetter
     public void addAdditionalInformation(String key, Object value) {
         this.additionalInformation.put(key, value);
-    }
-
-    public Long getUid() {
-        return uid;
-    }
-
-    public void setUid(Long uid) {
-        this.uid = uid;
     }
 
     public Integer getType() {
