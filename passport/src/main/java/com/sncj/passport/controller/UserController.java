@@ -36,6 +36,11 @@ public class UserController {
         return "login";
     }
 
+    @RequestMapping("/oauth/login")
+    public String oauthLogin(){
+        return "oauth/login";
+    }
+
     @RequestMapping("/user2")
     @ResponseBody
     public ReturnMessage<List<UserEntity>> findAll() {
@@ -53,6 +58,13 @@ public class UserController {
     @RequestMapping("/permission2")
     @ResponseBody
     public ReturnMessage<List<PermissionEntity>> permission2() {
+        List<PermissionEntity> all = iPermissionService.findAll();
+        return ReturnMessage.success(all.size(), all);
+    }
+
+    @RequestMapping("/secure/permission2")
+    @ResponseBody
+    public ReturnMessage<List<PermissionEntity>> sepermission2() {
         List<PermissionEntity> all = iPermissionService.findAll();
         return ReturnMessage.success(all.size(), all);
     }

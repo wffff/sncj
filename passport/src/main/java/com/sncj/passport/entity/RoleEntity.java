@@ -33,6 +33,12 @@ public class RoleEntity extends BaseEntity {
         this.description = description;
     }
 
+    public RoleEntity(Integer id, String name, String description) {
+        this.id=id;
+        this.name=name;
+        this.description=description;
+    }
+
     public Set<PermissionEntity> getPermission() {
         return permission;
     }

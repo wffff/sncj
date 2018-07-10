@@ -1,5 +1,6 @@
 package com.sncj.passport.securityservice;
 
+import com.sncj.passport.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -15,23 +16,23 @@ import java.util.List;
 @Service
 public class OAuthUserDetailsExtService {
 
-    private static final String GET_USERS = "SELECT id, username, password, mobile, email, name, enabled, expired, locked, limited, time FROM oauth_user WHERE deleted=FALSE ORDER BY id DESC";
-    private static final String ADD_USER_DETAILS = "INSERT INTO oauth_user (username,password) VALUES (?,?)";
+    private static final String GET_USERS = "SELECT id, username, password, mobile, email, name, enabled, expired, locked, limited, time FROM t_user WHERE deleted=FALSE ORDER BY id DESC";
+    private static final String ADD_USER_DETAILS = "INSERT INTO t_user (username,password) VALUES (?,?)";
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private OAuthUserDetailsService userDetailsService;
 
-    public List<OAuthUserDetails> getUsers() {
+    public List<UserEntity> getUsers() {
 
         return jdbcTemplate.query(GET_USERS, (rs, rowNum) -> mapRow(rs));
     }
 
-    private OAuthUserDetails mapRow(ResultSet rs) throws SQLException {
+    private UserEntity mapRow(ResultSet rs) throws SQLException {
 
-        return new OAuthUserDetails(
-                rs.getLong("id"),
+        return new UserEntity(
+                rs.getInt("id"),
                 rs.getString("username"),
                 rs.getString("password"),
                 rs.getString("mobile"),
@@ -46,7 +47,7 @@ public class OAuthUserDetailsExtService {
         );
     }
 
-    public void addUser(OAuthUserDetails userDetails) {
+    public void addUser(UserEntity userDetails) {
         Assert.notNull(userDetails, "no user id");
 
         Object[] fields = getFields(userDetails);
@@ -60,7 +61,7 @@ public class OAuthUserDetailsExtService {
             addUserCycle(fields);
         }
     }
-    private Object[] getFields(OAuthUserDetails userDetails) {
+    private Object[] getFields(UserEntity userDetails) {
         return new Object[]{
                 userDetails.getUsername()!=null?userDetails.getUsername():null,
                 userDetails.getPassword()!=null?userDetails.getPassword():null

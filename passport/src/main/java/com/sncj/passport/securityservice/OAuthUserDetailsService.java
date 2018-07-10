@@ -1,5 +1,6 @@
 package com.sncj.passport.securityservice;
 
+import com.sncj.passport.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,36 +19,15 @@ import java.util.List;
  * Created by momo on 2017/4/20.
  */
 @Service
-public class OAuthUserDetailsService implements UserDetailsService {
+public class OAuthUserDetailsService {
 
-    private static final String FIND_USER_BY_USERNAME = "SELECT id, username, mobile, email, name, enabled, expired, locked, limited, time FROM oauth_user WHERE username=? AND deleted=FALSE";
-    private static final String LOAD_USER_BY_USERNAME = "SELECT id, username, password, enabled FROM oauth_user WHERE username=? AND expired=FALSE AND locked=FALSE AND limited=FALSE AND deleted=FALSE";
-    private static final String GET_AUTHORITIES_BY_USERNAME = "SELECT r.name AS authority FROM oauth_user u, oauth_role r, oauth_authority a WHERE u.id=a.uid AND r.id=a.rid AND u.username=?";
+    private static final String FIND_USER_BY_USERNAME = "SELECT id, username, mobile, email, name, enabled, expired, locked, limited, time FROM t_user WHERE username=? AND deleted=FALSE";
+    private static final String LOAD_USER_BY_USERNAME = "SELECT id, username, password, enabled FROM t_user WHERE username=? AND expired=FALSE AND locked=FALSE AND limited=FALSE AND deleted=FALSE";
+    private static final String GET_AUTHORITIES_BY_USERNAME = "SELECT r.name AS authority FROM t_user u, t_role r, t_user_role a WHERE u.id=a.user_id AND r.id=a.role_id AND u.username=?";
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-        if (!StringUtils.hasText(username)) throw new UsernameNotFoundException("please input username");
-
-        List<? extends GrantedAuthority> authorities = getAuthoritiesByUsername(username);
-
-        try {
-            return jdbcTemplate.queryForObject(LOAD_USER_BY_USERNAME, (rs, rowNum) ->
-                            new OAuthUserDetails(
-                                    rs.getLong("id"),
-                                    rs.getString("username"),
-                                    rs.getString("password"),
-                                    rs.getBoolean("enabled"),
-                                    authorities
-                            )
-                    , username);
-        } catch (EmptyResultDataAccessException e) {
-            throw new UsernameNotFoundException("no exist user by username: " + username);
-        }
-    }
 
     public List<? extends GrantedAuthority> getAuthoritiesByUsername(String username) {
 
@@ -64,7 +44,7 @@ public class OAuthUserDetailsService implements UserDetailsService {
         return authorities;
     }
 
-    public OAuthUserDetails findUserByUsername(String username) throws UsernameNotFoundException {
+    public UserEntity findUserByUsername(String username) throws UsernameNotFoundException {
 
         if (!StringUtils.hasText(username)) throw new UsernameNotFoundException("please input username");
 
@@ -72,8 +52,8 @@ public class OAuthUserDetailsService implements UserDetailsService {
 
         try {
             return jdbcTemplate.queryForObject(FIND_USER_BY_USERNAME, (rs, rowNum) ->
-                            new OAuthUserDetails(
-                                    rs.getLong("id"),
+                            new UserEntity(
+                                    rs.getInt("id"),
                                     rs.getString("username"),
                                     "",
                                     rs.getString("mobile"),

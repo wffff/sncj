@@ -26,18 +26,18 @@ import java.util.Set;
 @Service
 public class OAuthClientDetailsService implements ClientDetailsService, ClientRegistrationService {
 
-    private static final String SELECT_CLIENT_DETAILS_BY_CLIENT_ID = "SELECT client_id, client_secret, resource_ids, scope, grant_types, redirect_uri, authorities, access_token_validity, refresh_token_validity, additional_information, autoapprove, uid, type, site, url, enabled, last, time FROM oauth_client WHERE client_id=? AND enabled=TRUE";
-    private static final String LIST_CLIENT_DETAILS = "SELECT client_id, client_secret, resource_ids, scope, grant_types, redirect_uri, authorities, access_token_validity, refresh_token_validity, additional_information, autoapprove, uid, type, site, url, enabled, last, time FROM oauth_client ORDER BY client_id";
+    private static final String SELECT_CLIENT_DETAILS_BY_CLIENT_ID = "SELECT client_id, client_secret, resource_ids, scope, grant_types, redirect_uri, authorities, access_token_validity, refresh_token_validity, additional_information, autoapprove, type, site, url, enabled, last, time FROM oauth_client WHERE client_id=? AND enabled=TRUE";
+    private static final String LIST_CLIENT_DETAILS = "SELECT client_id, client_secret, resource_ids, scope, grant_types, redirect_uri, authorities, access_token_validity, refresh_token_validity, additional_information, autoapprove, type, site, url, enabled, last, time FROM oauth_client ORDER BY client_id";
     private static final String ADD_CLIENT_DETAILS = "INSERT INTO oauth_client (client_secret, resource_ids, scope, grant_types, redirect_uri, authorities, access_token_validity, refresh_token_validity, additional_information, autoapprove, client_id) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-    private static final String ADD_CLIENT_DETAILS_OAUTH = "INSERT INTO oauth_client (client_secret,type,site,url,uid,enabled, resource_ids, scope, grant_types, redirect_uri, authorities, access_token_validity, refresh_token_validity, additional_information, autoapprove, client_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    private static final String UPDATE_CLIENT_DETAILS2 = "UPDATE oauth_client SET type=?, site=?, url=?, uid=?, enabled=?, resource_ids=?, scope=?, grant_types=?, redirect_uri=?, authorities=?, access_token_validity=?, refresh_token_validity=?, additional_information=?, autoapprove=? WHERE client_id=?";
+    private static final String ADD_CLIENT_DETAILS_OAUTH = "INSERT INTO oauth_client (client_secret,type,site,url,enabled, resource_ids, scope, grant_types, redirect_uri, authorities, access_token_validity, refresh_token_validity, additional_information, autoapprove, client_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String UPDATE_CLIENT_DETAILS2 = "UPDATE oauth_client SET type=?, site=?, url=?,  enabled=?, resource_ids=?, scope=?, grant_types=?, redirect_uri=?, authorities=?, access_token_validity=?, refresh_token_validity=?, additional_information=?, autoapprove=? WHERE client_id=?";
     private static final String UPDATE_CLIENT_DETAILS = "UPDATE oauth_client SET resource_ids=?, scope=?, grant_types=?, redirect_uri=?, authorities=?, access_token_validity=?, refresh_token_validity=?, additional_information=?, autoapprove=? WHERE client_id=?";
     private static final String UPDATE_CLIENT_SECRET = "UPDATE oauth_client SET client_secret=? WHERE client_id=?";
     private static final String REMOVE_CLIENT_DETAILS = "DELETE FROM oauth_client WHERE client_id=?";
     // ext
-    private static final String GET_CLIENTS = "SELECT client_id, client_secret, resource_ids, scope, grant_types, redirect_uri, authorities, access_token_validity, refresh_token_validity, additional_information, autoapprove, uid, type, site, url, enabled, last, time FROM oauth_client ORDER BY time DESC ";
+    private static final String GET_CLIENTS = "SELECT client_id, client_secret, resource_ids, scope, grant_types, redirect_uri, authorities, access_token_validity, refresh_token_validity, additional_information, autoapprove, type, site, url, enabled, last, time FROM oauth_client ORDER BY time DESC ";
     private static final String GET_CLIENTS_TOTAL = "SELECT COUNT(client_id) FROM oauth_client";
-    private static final String GET_BY_CLIENT_ID = "SELECT client_id, client_secret, resource_ids, scope, grant_types, redirect_uri, authorities, access_token_validity, refresh_token_validity, additional_information, autoapprove, uid, type, site, url, enabled, last, time FROM oauth_client WHERE client_id=?";
+    private static final String GET_BY_CLIENT_ID = "SELECT client_id, client_secret, resource_ids, scope, grant_types, redirect_uri, authorities, access_token_validity, refresh_token_validity, additional_information, autoapprove, type, site, url, enabled, last, time FROM oauth_client WHERE client_id=?";
 
 
     @Autowired
@@ -166,7 +166,6 @@ public class OAuthClientDetailsService implements ClientDetailsService, ClientRe
                 clientDetails.getType() != null ? clientDetails.getType() : null,
                 clientDetails.getSite() != null ? clientDetails.getSite() : null,
                 clientDetails.getUrl() != null ? clientDetails.getUrl() : null,
-                clientDetails.getUid() != null ? clientDetails.getUid() : null,
                 clientDetails.getEnabled(),
                 clientDetails.getResourceIds() != null ? StringUtils.collectionToCommaDelimitedString(clientDetails.getResourceIds()) : null,
                 clientDetails.getScope() != null ? StringUtils.collectionToCommaDelimitedString(clientDetails.getScope()) : null,
@@ -212,7 +211,6 @@ public class OAuthClientDetailsService implements ClientDetailsService, ClientRe
         String scopes = rs.getString("autoapprove");
         if (scopes != null) details.setAutoApproveScopes(StringUtils.commaDelimitedListToSet(scopes));
 
-        details.setUid(rs.getLong("uid"));
         details.setType(rs.getInt("type"));
         details.setSite(rs.getString("site"));
         details.setUrl(rs.getString("url"));

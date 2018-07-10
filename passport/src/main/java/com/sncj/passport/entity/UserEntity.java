@@ -7,10 +7,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.sql.Timestamp;
+import java.util.*;
 
 /**
  * Created by Danny on 2018/7/9.
@@ -43,7 +41,8 @@ public class UserEntity extends BaseEntity implements UserDetails {
 
     }
 
-    public UserEntity(String username, String password, String mobile, String email, String name, Boolean enabled, Boolean expired, Boolean locked, Boolean limited) {
+    public UserEntity(Integer id, String username, String password, String mobile, String email, String name, boolean enabled, boolean expired, boolean locked, boolean limited, Date time, Collection<? extends GrantedAuthority> authorities) {
+        this.id = id;
         this.username = username;
         this.password = password;
         this.mobile = mobile;
@@ -53,8 +52,17 @@ public class UserEntity extends BaseEntity implements UserDetails {
         this.expired = expired;
         this.locked = locked;
         this.limited = limited;
+        this.time = time;
+        this.authorities = (Set<GrantedAuthority>) authorities;
     }
 
+    public UserEntity(Integer id, String username, String password, boolean enabled, Collection<? extends GrantedAuthority> authorities) {
+        this(id, username, password, enabled, false, false, false, authorities);
+    }
+
+    public UserEntity(Integer id, String username, String password, boolean enabled, boolean expired, boolean locked, boolean limited, Collection<? extends GrantedAuthority> authorities) {
+        this(id, username, password, null, null, null, enabled, expired, locked, limited, null, authorities);
+    }
     public void setId(Integer id) {
         this.id = id;
     }
