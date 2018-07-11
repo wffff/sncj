@@ -20,6 +20,14 @@ public class StudentController {
     @Resource
     private IStudentService iStudentService;
 
+    @RequestMapping("index")
+    public String index(){
+        return "index";
+    }
+    @RequestMapping("securedPage")
+    public String securedPage(){
+        return "securedPage";
+    }
     @RequestMapping("/findAll")
     @ResponseBody
     public ReturnMessage<List<StudentEntity>> findAll(BasePage basePage, StudentEntity student) {

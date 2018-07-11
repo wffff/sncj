@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.security.Principal;
 import java.util.List;
 
 /**
@@ -41,6 +42,11 @@ public class UserController {
         return "oauth/login";
     }
 
+    @RequestMapping("/user/me")
+    @ResponseBody
+    public Principal user(Principal principal) {
+        return principal;
+    }
     @RequestMapping("/user2")
     @ResponseBody
     public ReturnMessage<List<UserEntity>> findAll() {

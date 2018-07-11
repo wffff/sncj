@@ -45,14 +45,15 @@ project(':libs') {
                 "com.sun.xml.bind:jaxb-core:${javaXmlBindVersion}", //#解决因java9模块化产生的找不到类的异常
                 "com.sun.xml.bind:jaxb-impl:${javaXmlBindVersion}", //#解决因java9模块化产生的找不到类的异常
 
-
+                "org.springframework.boot:spring-boot-starter-web:${springBootVersion}",
+                "org.springframework.boot:spring-boot-starter-web-services:${springBootVersion}",
                 "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}",
                 "org.springframework.boot:spring-boot-starter-security:${springBootVersion}",
                 "org.springframework.boot:spring-boot-starter-thymeleaf:${springBootVersion}",
+                "org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:${springBootVersion}",
                 "org.thymeleaf.extras:thymeleaf-extras-springsecurity4:${thymeleafExtrasVersion}",
-                "org.springframework.boot:spring-boot-starter-web:${springBootVersion}",
-                "org.springframework.boot:spring-boot-starter-web-services:${springBootVersion}",
-                "org.springframework.security.oauth:spring-security-oauth2:${springOauth2Version}",
+
+
                 "org.jsoup:jsoup:${jsoupVersion}",
                 "com.alibaba:fastjson:${alibabaFastJsonVersion}",
 
