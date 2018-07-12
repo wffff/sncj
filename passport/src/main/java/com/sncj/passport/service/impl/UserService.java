@@ -53,8 +53,4 @@ public class UserService implements IUserService ,UserDetailsService {
             throw new UsernameNotFoundException("admin: " + username + " do not exist!");
         }
     }
-
-    public static void main(String[] args) {
-        System.out.println(new BCryptPasswordEncoder().encode("123"));
-    }
 }
