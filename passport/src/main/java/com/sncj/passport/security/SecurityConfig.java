@@ -31,15 +31,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception { // @formatter:off
+//        http.requestMatchers()
+//                .antMatchers("/","/login", "/oauth/*")
+//                .and()
+//                .authorizeRequests()
+//                .anyRequest()
+//                .authenticated()
+//                .and()
+//                .formLogin()
+//                .permitAll();
         http.requestMatchers()
-                .antMatchers("/","/login", "/oauth/*")
+                .antMatchers("/","/login", "/oauth/*","/static/**")
                 .and()
                 .authorizeRequests()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .formLogin()
-                .permitAll();
+                .antMatchers("/login").permitAll()
+                .anyRequest().authenticated().and().formLogin()
+                .loginPage("/login").defaultSuccessUrl("/").permitAll().and().logout().permitAll();
     } // @formatter:on
 
     @Bean
