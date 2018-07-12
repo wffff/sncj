@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -7,6 +8,12 @@
 <body>
 <h1>Secured   Page</h1>
 
-Welcome, <span th:text="${#authentication.name}">Name</span>
+Welcome, <span th:text="${#authentication.authorities}">Name</span>
+<div sec:authorize="hasRole('ROLE_HOME')">
+    <p class="bg-info">恭喜您,您有 ROLE_homepage 权限 </p>
+</div>
+<div sec:authorize="hasRole('ROLE_ADMIN')"> <!-- 用户类型为ROLE_ADMIN 显示 -->
+    <p class="bg-info">恭喜您,您有 ROLE_ADMIN 权限 </p>
+</div>
 </body>
 </html>

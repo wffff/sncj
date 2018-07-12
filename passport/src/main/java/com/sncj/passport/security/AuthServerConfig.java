@@ -1,39 +1,90 @@
-//package com.sncj.passport.security;
-//
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.context.annotation.Configuration;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-//import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
-//import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
-//import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
-//import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
-//
-//
-//@Configuration
-//@EnableAuthorizationServer
-//public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
-//
-//    @Autowired
-//    private BCryptPasswordEncoder passwordEncoder;
-//
-//    @Override
-//    public void configure(final AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
-//        oauthServer.tokenKeyAccess("permitAll()")
-//            .checkTokenAccess("isAuthenticated()");
-//    }
-//
-//    @Override
-//    public void configure(final ClientDetailsServiceConfigurer clients) throws Exception {
-//        clients.inMemory()
-//            .withClient("de9af4d7233e7fe43803c915bda11ab190062a82")
-//            .secret(passwordEncoder.encode("233b0a865b1dbb4de3e510fdbdb47e65b68fc2a7"))
-//            .authorizedGrantTypes("authorization_code")
-//            .scopes("user_info")
-//            .autoApprove(true)
-//            .redirectUris("http://localhost:8000/ui/login","http://localhost:8000/ui/login")
-//        // .accessTokenValiditySeconds(3600)
-//        ; // 1 hour
-//    }
-//
-//
-//}
+package com.sncj.passport.security;
+
+import com.sncj.passport.service.impl.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
+import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
+
+import javax.sql.DataSource;
+import java.util.concurrent.TimeUnit;
+
+/**
+ * Created by Danny on 2018/7/12.
+ */
+@Configuration
+@EnableAuthorizationServer
+public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
+
+    @Autowired
+    private DataSource dataSource;
+
+    @Bean // 声明TokenStore实现
+    public TokenStore tokenStore() {
+        return new JdbcTokenStore(dataSource);
+    }
+
+    @Bean // 声明 ClientDetails实现
+    public ClientDetailsService clientDetails() {
+        return new JdbcClientDetailsService(dataSource);
+    }
+
+    @Autowired
+    private TokenStore tokenStore;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private UserService userService;
+
+    @Override
+    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+        clients
+                .jdbc(dataSource);
+    }
+
+    @Override // 配置框架应用上述实现
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+        endpoints.authenticationManager(authenticationManager);
+        endpoints.tokenStore(tokenStore());
+        endpoints.userDetailsService(userService);
+//         配置TokenServices参数
+        DefaultTokenServices tokenServices = new DefaultTokenServices();
+        tokenServices.setTokenStore(endpoints.getTokenStore());
+        tokenServices.setSupportRefreshToken(true);
+        tokenServices.setClientDetailsService(endpoints.getClientDetailsService());
+        tokenServices.setTokenEnhancer(endpoints.getTokenEnhancer());
+        tokenServices.setAccessTokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(1)); // 1天
+        endpoints.tokenServices(tokenServices);
+    }
+
+    @Bean
+    @Primary
+    public DefaultTokenServices tokenServices() {
+        DefaultTokenServices tokenServices = new DefaultTokenServices();
+        tokenServices.setSupportRefreshToken(true); // support refresh token
+        tokenServices.setTokenStore(tokenStore); // use jdbc token store
+        return tokenServices;
+    }
+
+    @Override
+    public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
+        oauthServer
+                .tokenKeyAccess("permitAll()")
+                .checkTokenAccess("permitAll()")
+                .allowFormAuthenticationForClients();
+
+    }
+}

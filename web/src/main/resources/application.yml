@@ -37,8 +37,8 @@ server:
 security:
   oauth2:
       client:
-        clientId: de9af4d7233e7fe43803c915bda11ab190062a82
-        clientSecret: 233b0a865b1dbb4de3e510fdbdb47e65b68fc2a7
+        clientId: oauth_client
+        clientSecret: oauth_client_secret
         accessTokenUri: http://localhost:8011/auth/oauth/token
         userAuthorizationUri: http://localhost:8011/auth/oauth/authorize
       resource:
