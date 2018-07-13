@@ -16,6 +16,7 @@ import java.util.*;
 @Entity
 @Table(name = "t_user")
 public class UserEntity extends BaseEntity implements UserDetails {
+    private Integer organizationId;
     private String username;
     private String password;
     private String mobile;
@@ -63,6 +64,15 @@ public class UserEntity extends BaseEntity implements UserDetails {
     public UserEntity(Integer id, String username, String password, boolean enabled, boolean expired, boolean locked, boolean limited, Collection<? extends GrantedAuthority> authorities) {
         this(id, username, password, null, null, null, enabled, expired, locked, limited, null, authorities);
     }
+
+    public Integer getOrganizationId() {
+        return organizationId;
+    }
+
+    public void setOrganizationId(Integer organizationId) {
+        this.organizationId = organizationId;
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }

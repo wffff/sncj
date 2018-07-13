@@ -8,4 +8,5 @@ import com.sncj.passport.entity.UserEntity;
  */
 public interface IUserRepository extends BaseRepository<UserEntity, Integer> {
     UserEntity findByUsername(String username);
+    //创建用户
 }

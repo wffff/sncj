@@ -8,6 +8,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.web.context.request.RequestContextListener;
 
 @SpringBootApplication
@@ -15,6 +16,7 @@ import org.springframework.web.context.request.RequestContextListener;
 @EnableJpaRepositories(basePackages = {"com.sncj.core"},
         repositoryFactoryBeanClass = BaseRepositoryFactoryBean.class//指定自己的工厂类
 )
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class WebApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {

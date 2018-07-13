@@ -18,7 +18,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 @EnableJpaRepositories(basePackages = {"com.sncj.passport"},
         repositoryFactoryBeanClass = BaseRepositoryFactoryBean.class//指定自己的工厂类
 )
-@EnableResourceServer
 public class PassportApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
