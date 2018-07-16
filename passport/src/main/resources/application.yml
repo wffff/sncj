@@ -10,6 +10,8 @@ spring:
     mode: HTML5
     encoding: UTF-8
     cache: false
+  jmx:
+      enabled: false
 
 server:
   port: 8011

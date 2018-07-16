@@ -26,6 +26,8 @@ spring:
       hibernate:
         temp:
           use_jdbc_metadata_defaults: false
+  jmx:
+    enabled: false
 
 server:
   port: 8000
@@ -39,10 +41,10 @@ security:
       client:
         clientId: oauth_client
         clientSecret: oauth_client_secret
-        accessTokenUri: http://localhost:8011/auth/oauth/token
-        userAuthorizationUri: http://localhost:8011/auth/oauth/authorize
+        accessTokenUri: http://localhost/passport/oauth/token
+        userAuthorizationUri: http://localhost/passport/oauth/authorize
       resource:
-        userInfoUri: http://localhost:8011/auth/user/me
+        userInfoUri: http://localhost/passport/user/me
 logging:
   level:
     root: WARN

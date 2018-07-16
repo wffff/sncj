@@ -9,4 +9,6 @@ import java.util.List;
  */
 public interface IUserService {
     List<UserEntity> findAll();
+    //创建用户
+//    List<UserEntity> createUser(String username,String password);
 }
