@@ -1,4 +1,4 @@
-package com.sncj.passport.entity.dto;
+package com.sncj.passport.dto;
 
 import com.sncj.passport.enums.OrganizationTypeEnum;
 

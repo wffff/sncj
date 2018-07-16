@@ -1,6 +1,6 @@
 package com.sncj.passport.repository;
 
-import com.sncj.passport.entity.dto.OrganizationTreeDTO;
+import com.sncj.passport.dto.OrganizationTreeDTO;
 
 import java.util.List;
 

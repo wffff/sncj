@@ -1,9 +1,15 @@
 package com.sncj.passport.service.impl;
 
+import com.sncj.passport.baseconfig.BasePage;
+import com.sncj.passport.baseconfig.RegexUtils;
 import com.sncj.passport.entity.RoleEntity;
+import com.sncj.passport.exception.RoleException;
+import com.sncj.passport.exception.UserException;
 import com.sncj.passport.repository.IRoleRepository;
 import com.sncj.passport.repository.IUserRepository;
 import com.sncj.passport.service.IRoleService;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -18,7 +24,27 @@ public class RoleService implements IRoleService {
     private IRoleRepository iRoleRepository;
 
     @Override
-    public List<RoleEntity> findAll() {
-        return iRoleRepository.findAll();
+    public Page<RoleEntity> pageRoleByConditions(BasePage basePage) {
+        RoleEntity roleEntity=new RoleEntity();
+        roleEntity.setDel(false);
+        return iRoleRepository.findAll(Example.of(roleEntity),basePage.getRequestPage());
+    }
+
+    @Override
+    public List<RoleEntity> listRoleByConditions() {
+        RoleEntity roleEntity=new RoleEntity();
+        roleEntity.setDel(false);
+        return iRoleRepository.findAll(Example.of(roleEntity));
+    }
+
+    @Override
+    public List<RoleEntity> createRole(String name, String description) {
+        if (!RegexUtils.notNull(name)){
+            throw new RoleException("角色名字为空");
+        }
+        RoleEntity roleEntity=new RoleEntity();
+        roleEntity.setName(name);
+        roleEntity.setDescription(description);
+        return iRoleRepository.saveAll(List.of(roleEntity));
     }
 }

@@ -1,26 +1,26 @@
 package com.sncj.passport.service.impl;
 
-import com.sncj.passport.baseconfig.MyGrantedAuthority;
-import com.sncj.passport.baseconfig.utils.RegexUtils;
+import com.sncj.passport.baseconfig.BasePage;
+import com.sncj.passport.baseconfig.RegexUtils;
 import com.sncj.passport.entity.PermissionEntity;
 import com.sncj.passport.entity.RoleEntity;
 import com.sncj.passport.entity.UserEntity;
+import com.sncj.passport.exception.UserException;
 import com.sncj.passport.repository.IUserRepository;
 import com.sncj.passport.service.IUserService;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Danny on 2018/7/9.
@@ -29,9 +29,33 @@ import java.util.Set;
 public class UserService implements IUserService ,UserDetailsService {
     @Resource
     private IUserRepository iUserRepository;
+
     @Override
-    public List<UserEntity> findAll() {
-        return iUserRepository.findAll();
+    public Page<UserEntity> pageUserByConditions(BasePage basePage) {
+        UserEntity userEntity=new UserEntity();
+        userEntity.setDel(false);
+        return iUserRepository.findAll(Example.of(userEntity),basePage.getRequestPage());
+    }
+
+    @Override
+    public List<UserEntity> listUserByConditions() {
+        UserEntity userEntity=new UserEntity();
+        userEntity.setDel(false);
+        return iUserRepository.findAll(Example.of(userEntity));
+    }
+
+    @Override
+    public List<UserEntity> createUser(String username, String password) {
+        if (!RegexUtils.notNull(username)){
+            throw new UserException("用户名为空");
+        }
+        if (!RegexUtils.notNull(password)){
+            throw new UserException("密码为空");
+        }
+        UserEntity userEntity=new UserEntity();
+        userEntity.setName(username);
+        userEntity.setPassword(password);
+        return iUserRepository.saveAll(List.of(userEntity));
     }
 
     @Override

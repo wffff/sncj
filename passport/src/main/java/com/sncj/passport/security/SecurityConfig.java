@@ -15,6 +15,17 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 @Configuration
 @Order(1)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    private static final String[] matchs  =  {
+            "/"
+            , "/login"
+            , "/oauth/*"
+            ,"/static/**"
+            ,"/organization/**"
+            ,"/role/**"
+            ,"/user/**"
+            ,"/permission/**"
+    };
+
     @Autowired
     private UserDetailsService userService;
     /**
@@ -31,17 +42,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception { // @formatter:off
-//        http.requestMatchers()
-//                .antMatchers("/","/login", "/oauth/*")
-//                .and()
-//                .authorizeRequests()
-//                .anyRequest()
-//                .authenticated()
-//                .and()
-//                .formLogin()
-//                .permitAll();
         http.requestMatchers()
-                .antMatchers("/","/login", "/oauth/*","/static/**","/organization/**")
+                .antMatchers(matchs)
                 .and()
                 .authorizeRequests()
                 .antMatchers("/login").permitAll()

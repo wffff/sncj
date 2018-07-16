@@ -1,7 +1,7 @@
 package com.sncj.passport.repository.impl;
 
 import com.sncj.passport.entity.OrganizationEntity;
-import com.sncj.passport.entity.dto.OrganizationDTO;
+import com.sncj.passport.dto.OrganizationDTO;
 import com.sncj.passport.enums.OrganizationTypeEnum;
 import com.sncj.passport.repository.IOrganizationRepository;
 import com.sncj.passport.repository.IOrganizationRepositoryCustom;

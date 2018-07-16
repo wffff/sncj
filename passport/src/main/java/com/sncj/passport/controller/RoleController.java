@@ -3,8 +3,7 @@ package com.sncj.passport.controller;
 import com.sncj.passport.baseconfig.BasePage;
 import com.sncj.passport.baseconfig.ReturnMessage;
 import com.sncj.passport.entity.RoleEntity;
-import com.sncj.passport.entity.UserEntity;
-import com.sncj.passport.service.IUserService;
+import com.sncj.passport.service.IRoleService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,15 +17,16 @@ import java.util.List;
  * Created by Danny on 2018/7/9.
  */
 @Controller
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/role")
+public class RoleController {
+
     @Resource
-    private IUserService iUserService;
+    private IRoleService iRoleService;
 
     @RequestMapping("/page")
     @ResponseBody
-    public ReturnMessage<List<UserEntity>> page(BasePage basePage) {
-        Page<UserEntity> userEntities = iUserService.pageUserByConditions(basePage);
-        return ReturnMessage.success((int) userEntities.getTotalElements(), userEntities.getContent());
+    public ReturnMessage<List<RoleEntity>> page(BasePage basePage) {
+        Page<RoleEntity> roleEntities = iRoleService.pageRoleByConditions(basePage);
+        return ReturnMessage.success((int)roleEntities.getTotalElements(),roleEntities.getContent());
     }
 }

@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.security.Principal;
+
 /**
  * Created by Danny on 2018/7/12.
  */
@@ -24,4 +26,9 @@ public class IndexController {
         return "test";
     }
 
+    @RequestMapping("/principal")
+    @ResponseBody
+    public Principal principal(Principal principal) {
+        return principal;
+    }
 }

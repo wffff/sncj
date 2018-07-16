@@ -49,6 +49,14 @@ public class BaseRepositoryImpl<T extends BaseEntity, ID extends Serializable> e
     @Override
     @Transactional
     public List<T> saveAll(List<T> entities) {
+        for (T t:entities){
+            if (null == t.getDel()) {
+                t.setDel(false);
+            }
+            if (null == t.getTime()) {
+                t.setTime(Date.from(Instant.now()));
+            }
+        }
         return super.saveAll(entities);
     }
 

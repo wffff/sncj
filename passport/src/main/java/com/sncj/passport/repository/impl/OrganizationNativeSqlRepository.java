@@ -2,7 +2,7 @@ package com.sncj.passport.repository.impl;
 
 import com.sncj.passport.baseconfig.IBaseNativeSqlRepository;
 import com.sncj.passport.entity.OrganizationEntity;
-import com.sncj.passport.entity.dto.OrganizationTreeDTO;
+import com.sncj.passport.dto.OrganizationTreeDTO;
 import com.sncj.passport.repository.IOrganizationNativeSqlRepository;
 import org.springframework.stereotype.Repository;
 

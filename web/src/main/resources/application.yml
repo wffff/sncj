@@ -26,6 +26,7 @@ spring:
       hibernate:
         temp:
           use_jdbc_metadata_defaults: false
+  #多项目部署时用到的
   jmx:
     enabled: false
 
@@ -41,10 +42,10 @@ security:
       client:
         clientId: oauth_client
         clientSecret: oauth_client_secret
-        accessTokenUri: http://localhost/passport/oauth/token
-        userAuthorizationUri: http://localhost/passport/oauth/authorize
+        accessTokenUri: http://localhost:8011/passport/oauth/token
+        userAuthorizationUri: http://localhost:8011/passport/oauth/authorize
       resource:
-        userInfoUri: http://localhost/passport/user/me
+        userInfoUri: http://localhost:8011/passport/principal
 logging:
   level:
     root: WARN
