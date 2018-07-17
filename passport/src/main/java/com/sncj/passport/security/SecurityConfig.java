@@ -19,7 +19,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/"
             , "/login"
             , "/oauth/*"
-            ,"/static/**"
             ,"/organization/**"
             ,"/role/**"
             ,"/user/**"

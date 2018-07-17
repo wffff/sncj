@@ -4,11 +4,11 @@ License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 -->
 <!DOCTYPE HTML>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <title>乌云后台登录</title>
 <!-- Custom Theme files -->
-<link href="../../static/login/css/style.css" rel="stylesheet" type="text/css" media="all"/>
+<link th:href="@{/static/login/css/style.css}" rel="stylesheet" type="text/css" media="all"/>
 <!-- Custom Theme files -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -22,7 +22,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!--header start here-->
 <div class="login-form">
 			<div class="top-login">
-				<span><img src="../../static/login/images/group.png" alt=""/></span>
+				<span><img th:src="@{/static/login/images/group.png}" alt=""/></span>
 			</div>
 			<h1>登录</h1>
 			<div class="login-top">
