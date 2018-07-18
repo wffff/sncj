@@ -1,9 +1,10 @@
 package com.sncj.passport.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sncj.passport.baseconfig.BaseEntity;
+import com.sncj.passport.enums.PermissionTypeEnum;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by Danny on 2018/7/9.
@@ -11,6 +12,13 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "t_permission")
 public class PermissionEntity extends BaseEntity {
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pid", updatable = false, insertable = false)
+    private PermissionEntity parent;
+    @Column(name = "pid")
+    private Integer pid;
+    private PermissionTypeEnum type;
     //权限名称
     private String name;
 
@@ -20,11 +28,14 @@ public class PermissionEntity extends BaseEntity {
     //授权链接
     private String url;
 
-    //父节点id
-    private Integer pid;
-
     //请求方法
     private String method;
+    private String iconCls;
+
+    private Integer moduleSort;
+    private Integer menuSort;
+    private Integer tabSort;
+    private Integer funcSort;
 
     public PermissionEntity() {
     }
@@ -35,6 +46,14 @@ public class PermissionEntity extends BaseEntity {
         this.url = url;
         this.pid = pid;
         this.method = method;
+    }
+
+    public PermissionTypeEnum getType() {
+        return type;
+    }
+
+    public void setType(PermissionTypeEnum type) {
+        this.type = type;
     }
 
     public String getName() {
@@ -77,4 +96,51 @@ public class PermissionEntity extends BaseEntity {
         this.method = method;
     }
 
+    public PermissionEntity getParent() {
+        return parent;
+    }
+
+    public void setParent(PermissionEntity parent) {
+        this.parent = parent;
+    }
+
+    public String getIconCls() {
+        return iconCls;
+    }
+
+    public void setIconCls(String iconCls) {
+        this.iconCls = iconCls;
+    }
+
+    public Integer getModuleSort() {
+        return moduleSort;
+    }
+
+    public void setModuleSort(Integer moduleSort) {
+        this.moduleSort = moduleSort;
+    }
+
+    public Integer getMenuSort() {
+        return menuSort;
+    }
+
+    public void setMenuSort(Integer menuSort) {
+        this.menuSort = menuSort;
+    }
+
+    public Integer getTabSort() {
+        return tabSort;
+    }
+
+    public void setTabSort(Integer tabSort) {
+        this.tabSort = tabSort;
+    }
+
+    public Integer getFuncSort() {
+        return funcSort;
+    }
+
+    public void setFuncSort(Integer funcSort) {
+        this.funcSort = funcSort;
+    }
 }

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html  xmlns:th="http://www.thymeleaf.org"
-       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragment/header :: header"></head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -12,9 +11,10 @@
         <div th:replace="fragment/left :: left"></div>
     </div>
 
-    <div class="layui-body">
-        <!-- 内容主体区域 -->
-        <div style="padding: 15px;">内容主体区域</div>
+    <div class="layui-body" th:fragment="content">
+        <div style="padding: 15px;">
+            <div th:replace="${main} :: content">Page Content</div>
+        </div>
     </div>
 
     <div class="layui-footer">
@@ -24,7 +24,6 @@
 <script>
     //JavaScript代码区域
     layui.use('element', function () {
-        var element = layui.element;
 
     });
 </script>

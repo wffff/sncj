@@ -1,7 +1,7 @@
 package com.sncj.passport.service.impl;
 
 import com.sncj.passport.baseconfig.BasePage;
-import com.sncj.passport.baseconfig.RegexUtils;
+import com.sncj.passport.baseconfig.utils.RegexUtils;
 import com.sncj.passport.entity.PermissionEntity;
 import com.sncj.passport.entity.RoleEntity;
 import com.sncj.passport.entity.UserEntity;
@@ -34,6 +34,10 @@ public class UserService implements IUserService ,UserDetailsService {
     public Page<UserEntity> pageUserByConditions(BasePage basePage) {
         UserEntity userEntity=new UserEntity();
         userEntity.setDel(false);
+        userEntity.setEnabled(true);
+        userEntity.setExpired(false);
+        userEntity.setLocked(false);
+        userEntity.setLimited(false);
         return iUserRepository.findAll(Example.of(userEntity),basePage.getRequestPage());
     }
 
@@ -41,6 +45,10 @@ public class UserService implements IUserService ,UserDetailsService {
     public List<UserEntity> listUserByConditions() {
         UserEntity userEntity=new UserEntity();
         userEntity.setDel(false);
+        userEntity.setEnabled(true);
+        userEntity.setExpired(false);
+        userEntity.setLocked(false);
+        userEntity.setLimited(false);
         return iUserRepository.findAll(Example.of(userEntity));
     }
 
@@ -56,6 +64,11 @@ public class UserService implements IUserService ,UserDetailsService {
         userEntity.setName(username);
         userEntity.setPassword(password);
         return iUserRepository.saveAll(List.of(userEntity));
+    }
+
+    @Override
+    public UserEntity findByName(String username) {
+        return iUserRepository.findByUsername(username);
     }
 
     @Override

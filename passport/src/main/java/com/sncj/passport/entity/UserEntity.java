@@ -1,6 +1,7 @@
 package com.sncj.passport.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sncj.passport.baseconfig.BaseEntity;
 import org.hibernate.annotations.Where;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,6 +19,7 @@ import java.util.*;
 public class UserEntity extends BaseEntity implements UserDetails {
     private Integer organizationId;
     private String username;
+    @JsonIgnore
     private String password;
     private String mobile;
     private String email;

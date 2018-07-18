@@ -68,6 +68,14 @@ public class RegexUtils {
         return StringUtils.isNotBlank(str);
     }
     /**
+     * 验证是否为ROLE_开头
+     * @param str
+     * @return
+     */
+    public static synchronized boolean isRole(String str) {
+        return str.toUpperCase().startsWith("ROLE_");
+    }
+    /**
      * 匹配是否符合正则表达式pattern 匹配返回true
      *
      * @param pattern 匹配模式

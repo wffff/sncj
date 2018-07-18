@@ -23,6 +23,11 @@ public class UserController {
     @Resource
     private IUserService iUserService;
 
+    @RequestMapping("/")
+    public String home(){
+        return "/user/index";
+    }
+
     @RequestMapping("/page")
     @ResponseBody
     public ReturnMessage<List<UserEntity>> page(BasePage basePage) {

@@ -1,6 +1,7 @@
 package com.sncj.passport.service;
 
 import com.sncj.passport.baseconfig.BasePage;
+import com.sncj.passport.dto.PermissionDTO;
 import com.sncj.passport.entity.PermissionEntity;
 import org.springframework.data.domain.Page;
 
@@ -18,4 +19,6 @@ public interface IPermissionService {
 
     //创建角色
     List<PermissionEntity> createPermission(String name, String description,String url,Integer pid,String method);
+
+    List<PermissionDTO> listTreeByUser(String username);
 }

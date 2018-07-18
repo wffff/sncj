@@ -16,4 +16,6 @@ public interface IUserService {
     List<UserEntity> listUserByConditions();
     //创建用户
     List<UserEntity> createUser(String username,String password);
+
+    UserEntity findByName(String username);
 }

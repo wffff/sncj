@@ -1,12 +1,10 @@
 package com.sncj.passport.service.impl;
 
 import com.sncj.passport.baseconfig.BasePage;
-import com.sncj.passport.baseconfig.RegexUtils;
+import com.sncj.passport.baseconfig.utils.RegexUtils;
 import com.sncj.passport.entity.RoleEntity;
 import com.sncj.passport.exception.RoleException;
-import com.sncj.passport.exception.UserException;
 import com.sncj.passport.repository.IRoleRepository;
-import com.sncj.passport.repository.IUserRepository;
 import com.sncj.passport.service.IRoleService;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
