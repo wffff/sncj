@@ -4,6 +4,7 @@ import com.sncj.passport.baseconfig.SecurityUserUtils;
 import com.sncj.passport.baseconfig.WebConstants;
 import com.sncj.passport.baseconfig.utils.RegexUtils;
 import com.sncj.passport.dto.PermissionDTO;
+import com.sncj.passport.entity.UserEntity;
 import com.sncj.passport.enums.PermissionTypeEnum;
 import com.sncj.passport.service.IPermissionService;
 import org.springframework.stereotype.Controller;

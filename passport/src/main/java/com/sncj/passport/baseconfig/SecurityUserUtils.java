@@ -17,13 +17,13 @@ public class SecurityUserUtils {
      *
      * @return
      */
-    public static UserDetails getSecurityUser() {
+    public static UserEntity getSecurityUser() {
         SecurityContext context = SecurityContextHolder.getContext();
         if (context != null) {
             Authentication authentication = context.getAuthentication();
             if (authentication != null) {
                 Object principal = authentication.getPrincipal();
-                return (UserDetails) principal;
+                return (UserEntity) principal;
                 }
             }
         throw new UserException("登录信息有误");

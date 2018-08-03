@@ -20,7 +20,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Danny on 2018/7/9.
@@ -75,7 +77,7 @@ public class UserService implements IUserService ,UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity user = iUserRepository.findByUsername(username);
         if (user != null) {
-            List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+            Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
             for (RoleEntity role:user.getRole()){
                 for (PermissionEntity permission:role.getPermission()){
                     if (permission != null && permission.getName() != null) {
@@ -85,7 +87,7 @@ public class UserService implements IUserService ,UserDetailsService {
                     }
                 }
             }
-            return new User(user.getUsername(), user.getPassword(), grantedAuthorities);
+            return new UserEntity(user.getId(),user.getUsername(), user.getPassword(),user.getEnabled(),grantedAuthorities);
         } else {
             throw new UsernameNotFoundException("admin: " + username + " do not exist!");
         }

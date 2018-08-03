@@ -33,7 +33,7 @@ public abstract class BaseEntity implements Serializable {
     public BaseEntity() {
     }
 
-    public BaseEntity(Boolean del, Date last, Date time, Integer operator) {
+    public BaseEntity(Boolean del, Date last, Date time) {
         this.del = del;
         this.last = last;
         this.time = time;
