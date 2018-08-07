@@ -1,7 +1,7 @@
 package com.sncj.core.baseconfig.utils;
 
-import com.sncj.core.entity.UserEntity;
-import com.sncj.core.exception.UserException;
+import com.sncj.core.auth_center.entity.UserEntity;
+import com.sncj.core.auth_center.exception.UserException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;

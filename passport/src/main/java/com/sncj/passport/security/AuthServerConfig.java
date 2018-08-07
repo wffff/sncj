@@ -1,6 +1,6 @@
 package com.sncj.passport.security;
 
-import com.sncj.core.service.impl.UserService;
+import com.sncj.core.auth_center.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

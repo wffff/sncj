@@ -2,8 +2,8 @@ package com.sncj.passport.controller;
 
 import com.sncj.core.baseconfig.BasePage;
 import com.sncj.core.baseconfig.ReturnMessage;
-import com.sncj.core.entity.UserEntity;
-import com.sncj.core.service.IUserService;
+import com.sncj.core.auth_center.entity.UserEntity;
+import com.sncj.core.auth_center.service.IUserService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
