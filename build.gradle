@@ -87,7 +87,9 @@ project(':passport') {
     apply plugin: 'war'
     apply plugin: 'org.springframework.boot'
     dependencies {
+        implementation project(':core')
         compileClasspath project(':libs')
+        testCompile project(':core')
         testCompile project(':libs')
     }
 }

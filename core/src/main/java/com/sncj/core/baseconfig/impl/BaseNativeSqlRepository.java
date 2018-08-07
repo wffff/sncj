@@ -1,7 +1,7 @@
 package com.sncj.core.baseconfig.impl;
 
 import com.sncj.core.baseconfig.IBaseNativeSqlRepository;
-import com.sncj.core.baseconfig.RegexUtils;
+import com.sncj.core.baseconfig.utils.RegexUtils;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;

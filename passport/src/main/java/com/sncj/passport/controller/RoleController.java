@@ -1,16 +1,15 @@
 package com.sncj.passport.controller;
 
-import com.sncj.passport.baseconfig.BasePage;
-import com.sncj.passport.baseconfig.ReturnMessage;
-import com.sncj.passport.entity.RoleEntity;
-import com.sncj.passport.service.IRoleService;
+import com.sncj.core.baseconfig.BasePage;
+import com.sncj.core.baseconfig.ReturnMessage;
+import com.sncj.core.entity.RoleEntity;
+import com.sncj.core.service.IRoleService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.security.Principal;
 import java.util.List;
 
 /**
@@ -27,6 +26,6 @@ public class RoleController {
     @ResponseBody
     public ReturnMessage<List<RoleEntity>> page(BasePage basePage) {
         Page<RoleEntity> roleEntities = iRoleService.pageRoleByConditions(basePage);
-        return ReturnMessage.success((int)roleEntities.getTotalElements(),roleEntities.getContent());
+        return ReturnMessage.success((int) roleEntities.getTotalElements(), roleEntities.getContent());
     }
 }

@@ -12,7 +12,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.web.context.request.RequestContextListener;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.sncj.*"})
+@ComponentScan(basePackages = {"com.sncj.web.*","com.sncj.core.*"})
 @EnableJpaRepositories(basePackages = {"com.sncj.core"},
         repositoryFactoryBeanClass = BaseRepositoryFactoryBean.class//指定自己的工厂类
 )

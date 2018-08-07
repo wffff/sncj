@@ -26,7 +26,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             ,"/test/**"
             ,"/menus/**"
             ,"/main/**"
-            ,"/principal"
     };
 
     @Autowired

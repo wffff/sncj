@@ -1,7 +1,7 @@
 package com.sncj.passport.controller;
 
-import com.sncj.passport.entity.OrganizationEntity;
-import com.sncj.passport.service.IOrganizationService;
+import com.sncj.core.entity.OrganizationEntity;
+import com.sncj.core.service.IOrganizationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;

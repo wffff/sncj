@@ -1,7 +1,7 @@
 package com.sncj.core.baseconfig.impl;
 
 import com.sncj.core.baseconfig.*;
-import org.springframework.boot.logging.LogLevel;
+import com.sncj.core.baseconfig.constants.SystemConstants;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -50,6 +50,14 @@ public class BaseRepositoryImpl<T extends BaseEntity, ID extends Serializable> e
     @Override
     @Transactional
     public List<T> saveAll(List<T> entities) {
+        for (T t:entities){
+            if (null == t.getDel()) {
+                t.setDel(false);
+            }
+            if (null == t.getTime()) {
+                t.setTime(Date.from(Instant.now()));
+            }
+        }
         return super.saveAll(entities);
     }
 

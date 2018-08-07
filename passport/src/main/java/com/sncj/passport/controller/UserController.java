@@ -1,17 +1,15 @@
 package com.sncj.passport.controller;
 
-import com.sncj.passport.baseconfig.BasePage;
-import com.sncj.passport.baseconfig.ReturnMessage;
-import com.sncj.passport.entity.RoleEntity;
-import com.sncj.passport.entity.UserEntity;
-import com.sncj.passport.service.IUserService;
+import com.sncj.core.baseconfig.BasePage;
+import com.sncj.core.baseconfig.ReturnMessage;
+import com.sncj.core.entity.UserEntity;
+import com.sncj.core.service.IUserService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.security.Principal;
 import java.util.List;
 
 /**
@@ -24,7 +22,7 @@ public class UserController {
     private IUserService iUserService;
 
     @RequestMapping("/")
-    public String home(){
+    public String home() {
         return "/user/index";
     }
 

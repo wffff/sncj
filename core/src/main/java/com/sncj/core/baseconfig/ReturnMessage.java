@@ -1,6 +1,8 @@
 package com.sncj.core.baseconfig;
 
 
+import com.sncj.core.baseconfig.constants.SystemConstants;
+
 import java.io.Serializable;
 
 /**

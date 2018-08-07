@@ -1,9 +1,8 @@
 package com.sncj.passport.controller;
-
-import com.sncj.passport.baseconfig.BasePage;
-import com.sncj.passport.baseconfig.ReturnMessage;
-import com.sncj.passport.entity.PermissionEntity;
-import com.sncj.passport.service.IPermissionService;
+import com.sncj.core.baseconfig.BasePage;
+import com.sncj.core.baseconfig.ReturnMessage;
+import com.sncj.core.entity.PermissionEntity;
+import com.sncj.core.service.IPermissionService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

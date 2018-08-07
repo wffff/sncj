@@ -1,6 +1,7 @@
 package com.sncj.core.baseconfig;
 
 import com.alibaba.fastjson.JSON;
+import com.sncj.core.baseconfig.constants.SystemConstants;
 
 /**
  * Created by Adam.yao on 2017/10/25.

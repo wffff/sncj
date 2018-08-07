@@ -1,7 +1,7 @@
 package com.sncj.core.student.repository.impl;
 
 import com.sncj.core.baseconfig.BasePage;
-import com.sncj.core.baseconfig.RegexUtils;
+import com.sncj.core.baseconfig.utils.RegexUtils;
 import com.sncj.core.student.entity.StudentEntity;
 import com.sncj.core.student.repository.IStudentRepository;
 import com.sncj.core.student.repository.IStudentRepositoryCustom;

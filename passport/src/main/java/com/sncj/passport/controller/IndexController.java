@@ -1,12 +1,11 @@
 package com.sncj.passport.controller;
 
-import com.sncj.passport.baseconfig.SecurityUserUtils;
-import com.sncj.passport.baseconfig.WebConstants;
-import com.sncj.passport.baseconfig.utils.RegexUtils;
-import com.sncj.passport.dto.PermissionDTO;
-import com.sncj.passport.entity.UserEntity;
-import com.sncj.passport.enums.PermissionTypeEnum;
-import com.sncj.passport.service.IPermissionService;
+import com.sncj.core.baseconfig.utils.SecurityUserUtils;
+import com.sncj.core.baseconfig.constants.WebConstants;
+import com.sncj.core.baseconfig.utils.RegexUtils;
+import com.sncj.core.dto.PermissionDTO;
+import com.sncj.core.enums.PermissionTypeEnum;
+import com.sncj.core.service.IPermissionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +26,7 @@ import java.util.Map;
 public class IndexController {
     @Resource
     private IPermissionService iPermissionService;
+
     @RequestMapping("/")
     public String index() {
         return "index";
@@ -35,11 +35,6 @@ public class IndexController {
     @RequestMapping("/login")
     public String login() {
         return "login";
-    }
-    @RequestMapping("/test")
-    @ResponseBody
-    public String test(){
-        return SecurityUserUtils.getSecurityUser().getUsername();
     }
 
     @RequestMapping("/principal")
