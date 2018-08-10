@@ -1,9 +1,27 @@
 spring:
   datasource:
-    url: jdbc:postgresql://118.25.193.38:5432/postgres
-    username: postgres
-    password: 123
-    driver-class-name: org.postgresql.Driver
+    druid:
+     url: jdbc:postgresql://118.25.193.38:5432/postgres
+     username: postgres
+     password: 123
+     driver-class-name: org.postgresql.Driver
+     initial-size: 1
+     max-active: 100
+     min-idle: 1
+     max-wait: 60000
+     pool-prepared-statements: false
+     max-open-prepared-statements: 20
+     validation-query: SELECT 1
+     validation-query-timeout: 5000
+     test-on-borrow: false
+     test-on-return: false
+     test-while-idle: true
+     time-between-eviction-runs-millis: 60000
+     min-evictable-idle-time-millis: 300000
+     ##################################################
+     # Spring监控配置，配置_Druid和Spring关联监控配置
+     aop-patterns: cn.sncj.core.*.*.repository.*
+
   mvc:
     static-path-pattern: /static/**
   thymeleaf:

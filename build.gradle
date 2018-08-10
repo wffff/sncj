@@ -62,7 +62,9 @@ project(':libs') {
                 "org.apache.commons:commons-lang3:${commonLang}",
                 "com.belerweb:pinyin4j:${pinyin4jVersion}", // 中文拼音
 
-                "net.sourceforge.nekohtml:nekohtml:${nekohtmlVersion}"
+                "net.sourceforge.nekohtml:nekohtml:${nekohtmlVersion}",
+
+                "com.alibaba:druid-spring-boot-starter:${alibabaDruidVersion}",
         )
     }
 }
