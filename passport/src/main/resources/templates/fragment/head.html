@@ -4,31 +4,29 @@
 <div th:fragment="head">
     <div class="layui-logo">圣能科技</div>
     <!-- 头部区域（可配合layui已有的水平导航） -->
-    <ul class="layui-nav layui-layout-left">
-        <!--<li class="layui-nav-item"><a href="">用户管理</a></li>-->
-        <!--<li class="layui-nav-item"><a href="">角色管理</a></li>-->
-        <!--<li class="layui-nav-item"><a href="">权限管理</a></li>-->
-        <li class="layui-nav-item">
-            <a href="javascript:;">后台管理</a>
-            <dl class="layui-nav-child">
-                <dd><a th:href="@{/user/}">用户管理</a></dd>
-                <dd><a href="">角色管理</a></dd>
-                <dd><a href="">授权管理</a></dd>
-            </dl>
-        </li>
-    </ul>
+    <!--<ul class="layui-nav layui-layout-left">-->
+        <!--&lt;!&ndash;<li class="layui-nav-item"><a href="">用户管理</a></li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li class="layui-nav-item"><a href="">角色管理</a></li>&ndash;&gt;-->
+        <!--&lt;!&ndash;<li class="layui-nav-item"><a href="">权限管理</a></li>&ndash;&gt;-->
+        <!--<li class="layui-nav-item">-->
+            <!--<a href="javascript:;">后台管理</a>-->
+            <!--<dl class="layui-nav-child">-->
+                <!--<dd><a th:href="@{/user/}">用户管理</a></dd>-->
+                <!--<dd><a href="">角色管理</a></dd>-->
+                <!--<dd><a href="">授权管理</a></dd>-->
+            <!--</dl>-->
+        <!--</li>-->
+    <!--</ul>-->
     <ul class="layui-nav layui-layout-right">
         <li class="layui-nav-item">
             <a href="javascript:;">
-                <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                贤心
+                <p th:text="${session.username}"></p>
             </a>
             <dl class="layui-nav-child">
-                <dd><a href="">基本资料</a></dd>
-                <dd><a href="">安全设置</a></dd>
+                <dd><a th:href="@{/login?logout}">退出</a></dd>
             </dl>
         </li>
-        <li class="layui-nav-item"><a href="">退了</a></li>
+        <!--<li class="layui-nav-item"><a th:href="@{/login?logout}">退了</a></li>-->
     </ul>
 </div>
 </html>
