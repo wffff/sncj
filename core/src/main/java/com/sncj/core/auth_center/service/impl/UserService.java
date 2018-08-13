@@ -9,6 +9,7 @@ import com.sncj.core.auth_center.exception.UserException;
 import com.sncj.core.auth_center.repository.IUserRepository;
 import com.sncj.core.auth_center.service.IUserService;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -31,14 +32,20 @@ public class UserService implements IUserService,UserDetailsService {
     private IUserRepository iUserRepository;
 
     @Override
-    public Page<UserEntity> pageUserByConditions(BasePage basePage) {
+    public Page<UserEntity> pageUserByConditions(BasePage basePage,String name) {
         UserEntity userEntity=new UserEntity();
+        if (RegexUtils.notNull(name)){
+            userEntity.setName(name);
+        }
         userEntity.setDel(false);
         userEntity.setEnabled(true);
         userEntity.setExpired(false);
         userEntity.setLocked(false);
         userEntity.setLimited(false);
-        return iUserRepository.findAll(Example.of(userEntity),basePage.getRequestPage());
+        ExampleMatcher matcher = ExampleMatcher.matching() //构建对象
+                .withMatcher("name", ExampleMatcher.GenericPropertyMatchers.contains());
+        Example<UserEntity> of = Example.of(userEntity, matcher);
+        return iUserRepository.findAll(of,basePage.getRequestPage());
     }
 
     @Override

@@ -11,10 +11,8 @@
         <div th:replace="fragment/left :: left"></div>
     </div>
 
-    <div class="layui-body" th:fragment="content">
-        <div style="padding: 15px;">
-            <div th:replace="${main} :: content">Page Content</div>
-        </div>
+    <div th:fragment="content">
+        <div th:replace="${main} :: content">Page Content</div>
     </div>
 
     <div class="layui-footer">

@@ -1,91 +1,78 @@
 <!--suppress ThymeleafVariablesResolveInspection -->
 <html th:if="${tab.url == 'user'}" xmlns:th="http://www.thymeleaf.org">
 
-<div id="user">
+<div id="user" >
     <div class="inSearch">
         <div class="allSearch">
             <div class="layui-inline">
-                <input name="id" required="" lay-verify="required"
-                       placeholder="编号" autocomplete="off" class="layui-input input-qu">
-            </div>
-            <div class="layui-inline">
-                <input name="customerOrderId"  required="" lay-verify="required"
-                       placeholder="客户订单号" autocomplete="off" class="layui-input input-qu">
-            </div>
-            <div class="layui-inline">
-                <input name="vendorOrderId"  required="" lay-verify="required"
-                       placeholder="供应商订单号" autocomplete="off" class="layui-input input-qu">
-            </div>
-            <div class="layui-inline">
-                <input name="orderGoodsId"  required="" lay-verify="required"
-                       placeholder="订单商品编号" autocomplete="off" class="layui-input input-qu">
-            </div>
-            <div class="layui-inline">
-                <input name="organizationId" required="" lay-verify="required"
-                       placeholder="组织编号" autocomplete="off" class="layui-input input-qu">
-            </div>
-            <div class="layui-inline">
-                <input name="startTime" id="tradePlatformCustomerRefundStartTime" required="" lay-verify="required"
-                       placeholder="开始日期" autocomplete="off" class="layui-input input-qu start">
-            </div>
-            <div class="layui-inline">
-                <input name="endTime" id="tradePlatformCustomerRefundEndTime" required="" lay-verify="required"
-                       placeholder="结束日期" autocomplete="off" class="layui-input input-qu end">
-            </div>
-            <div class="layui-inline">
-                <div class="layui-form" pane="">
-                    <input type="checkbox" name="transferPurchase" lay-skin="primary" title="是否为转采">
-                </div>
+                <input name="name" required="" lay-verify="required"
+                       placeholder="用户名称" autocomplete="off" class="layui-input input-qu">
             </div>
         </div>
         <div class="layui-input-inline right">
-            <button class="layui-btn layui-btn-sm layui-btn-primary" data-type="tradePlatformCustomerRefundReload">查询</button>
+            <button class="layui-btn layui-btn-sm layui-btn-primary" data-type="userReload">查询
+            </button>
         </div>
     </div>
 </div>
-<table class="page-table"  th:id="${tab.url}" th:attr="lay-filter=${tab.url}"></table>
-<!--<script th:src="@{${session.staticUrl}+'/static/js/finance/trade_platform_customer_refund.js'}"></script>-->
+<table class="page-table" th:id="${tab.url}" th:attr="lay-filter=${tab.url}"></table>
+
 <script>
-    layui.use('table', function(){
+    layui.use(['table', 'jquery'], function () {
         var table = layui.table;
+        var $ = layui.jquery;
 
         //方法级渲染
         table.render({
-            elem: '#user'
-            ,url: '/passport/user/page'
-            ,cols: [
+            id: 'user'
+            , elem: '#user'
+            , url: '/passport/user/page'
+            , cols: [
                 [
-                {checkbox: true, fixed: true}
-                ,{field:'id', title: 'ID', width:80}
-                ,{field:'username', title: '用户名', width:80}
+                    {checkbox: true, fixed: true}
+                    , {field: 'id', title: 'ID', width: 80}
+                    , {field: 'username', title: '用户名', width: 80}
+                    , {field: 'name', title: '用户名称', width: 80}
+                ]
             ]
-            ]
-            ,id: 'user'
-            ,page: true
-            ,height: 315
+            , page: true
+            , height: 315
         });
-        //
-        // var $ = layui.$, active = {
-        //     reload: function(){
-        //         var demoReload = $('#demoReload');
-        //
-        //         //执行重载
-        //         table.reload('testReload', {
-        //             page: {
-        //                 curr: 1 //重新从第 1 页开始
-        //             }
-        //             ,where: {
-        //                 key: {
-        //                     id: demoReload.val()
-        //                 }
-        //             }
-        //         });
-        //     }
-        // };
-        //
-        // $('.demoTable .layui-btn').on('click', function(){
-        //     var type = $(this).data('type');
-        //     active[type] ? active[type].call(this) : '';
-        // });
+
+        var active = {
+            userReload: function () {
+                //执行重载
+                table.reload('user', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    , where: {
+                        name: $("#user input[name='name']").val(),
+                    }
+                });
+            },
+            userAdd: function () {
+                layer.open({
+                    type: 1
+                    , title: ['用户创建', 'font-size:18px;']
+                    , closeBtn: 1
+                    , area: ['450px', '300px']
+                    , maxmin: true  //最大最小化
+                    , id: 'LAY_layui_userForm' //设定一个id，防止重复弹出
+                    , content: $('#userForm')
+                    , resize: true
+                    , shadeClose: true
+                    // ,zIndex: layer.zIndex //重点1
+                    // ,success: function(layero){
+                    //     layer.setTop(layero); //重点2
+                    // }
+                });
+            }
+        };
+
+        $(document.body).on('click', '.layui-btn', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
     });
 </script>

@@ -65,6 +65,8 @@ project(':libs') {
                 "net.sourceforge.nekohtml:nekohtml:${nekohtmlVersion}",
 
                 "com.alibaba:druid-spring-boot-starter:${alibabaDruidVersion}",
+
+                "org.projectlombok:lombok:${lombokVersion}",
         )
     }
 }

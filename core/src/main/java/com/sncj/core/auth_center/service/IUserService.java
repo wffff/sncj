@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface IUserService {
     //分页查询用户
-    Page<UserEntity> pageUserByConditions(BasePage basePage);
+    Page<UserEntity> pageUserByConditions(BasePage basePage,String name);
     //查询用户
     List<UserEntity> listUserByConditions();
     //创建用户

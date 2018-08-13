@@ -28,8 +28,8 @@ public class UserController {
 
     @RequestMapping("/page")
     @ResponseBody
-    public ReturnMessage<List<UserEntity>> page(BasePage basePage) {
-        Page<UserEntity> userEntities = iUserService.pageUserByConditions(basePage);
+    public ReturnMessage<List<UserEntity>> page(BasePage basePage,String name) {
+        Page<UserEntity> userEntities = iUserService.pageUserByConditions(basePage,name);
         return ReturnMessage.success((int) userEntities.getTotalElements(), userEntities.getContent());
     }
 }
