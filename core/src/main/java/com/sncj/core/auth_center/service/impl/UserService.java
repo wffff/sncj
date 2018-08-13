@@ -79,6 +79,15 @@ public class UserService implements IUserService,UserDetailsService {
     }
 
     @Override
+    public UserEntity add(String username, String password, String name) {
+        UserEntity userEntity=new UserEntity();
+        userEntity.setName(name);
+        userEntity.setUsername(username);
+        userEntity.setPassword(password);
+        return iUserRepository.save(userEntity);
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity user = iUserRepository.findByUsername(username);
         if (user != null) {

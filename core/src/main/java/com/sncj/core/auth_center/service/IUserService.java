@@ -18,4 +18,6 @@ public interface IUserService {
     List<UserEntity> createUser(String username, String password);
 
     UserEntity findByName(String username);
+
+    UserEntity add(String username, String password, String name);
 }

@@ -18,9 +18,10 @@
 <table class="page-table" th:id="${tab.url}" th:attr="lay-filter=${tab.url}"></table>
 
 <script>
-    layui.use(['table', 'jquery'], function () {
+    layui.use(['table', 'jquery','form'], function () {
         var table = layui.table;
         var $ = layui.jquery;
+        var form = layui.form;
 
         //方法级渲染
         table.render({
@@ -69,8 +70,25 @@
                 });
             }
         };
+        form.on("submit(userFormSubmit)",function (data) {
+            $.ajax({
+                url:'/passport/user/add',
+                method:'POST',
+                data:data.field,
+                success:function (data) {
+                    if (data.code>=0){
+                        layer.closeAll();
+                        table.reload('user');
+                        layer.msg(data.msg,{time:1000});
+                    }else {
+                        layer.msg(data.msg);
+                    }
+                }
+            });
+            return false;
+        });
 
-        $(document.body).on('click', '.layui-btn', function () {
+        $('.layui-btn').on('click', function () {
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
         });

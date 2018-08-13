@@ -26,10 +26,10 @@ public class UserEntity extends BaseEntity implements UserDetails {
     private String mobile;
     private String email;
     private String name;
-    private Boolean enabled;
-    private Boolean expired;
-    private Boolean locked;
-    private Boolean limited;
+    private Boolean enabled=true;
+    private Boolean expired=false;
+    private Boolean locked=false;
+    private Boolean limited=false;
     @Transient
     @JSONField(serialize = false)
     private Set<GrantedAuthority> authorities;
