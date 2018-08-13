@@ -1,11 +1,11 @@
 package com.sncj.passport.controller;
 
-import com.sncj.core.baseconfig.utils.SecurityUserUtils;
-import com.sncj.core.baseconfig.constants.WebConstants;
-import com.sncj.core.baseconfig.utils.RegexUtils;
 import com.sncj.core.auth_center.dto.PermissionDTO;
 import com.sncj.core.auth_center.enums.PermissionTypeEnum;
 import com.sncj.core.auth_center.service.IPermissionService;
+import com.sncj.core.baseconfig.constants.WebConstants;
+import com.sncj.core.baseconfig.utils.RegexUtils;
+import com.sncj.core.baseconfig.utils.SecurityUserUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
