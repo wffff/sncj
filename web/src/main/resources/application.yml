@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://118.25.193.38:5432/postgres
+    url: jdbc:postgresql://118.25.193.38:5432/sncj
     username: postgres
     password: 123
     driver-class-name: org.postgresql.Driver
@@ -42,10 +42,11 @@ security:
       client:
         clientId: oauth_client
         clientSecret: oauth_client_secret
-        accessTokenUri: http://localhost:8011/passport/oauth/token
-        userAuthorizationUri: http://localhost:8011/passport/oauth/authorize
+        accessTokenUri: http://www.wanggoudan.cn/passport/oauth/token
+        userAuthorizationUri: http://www.wanggoudan.cn/passport/oauth/authorize
+#        clientAuthenticationScheme: form
       resource:
-        userInfoUri: http://localhost:8011/passport/principal
+        userInfoUri: http://www.wanggoudan.cn/passport/principal
 logging:
   level:
     root: WARN

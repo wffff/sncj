@@ -52,7 +52,6 @@ public class IndexController {
         request.getSession().setAttribute("func", menus.get("func"));
         request.getSession().setAttribute("tabs", menus.get("tabs"));
         request.getSession().setAttribute("menus", menus.get("menus"));
-        request.getSession().setAttribute("username", SecurityUserUtils.getSecurityUser().getUsername());
         return WebConstants.INDEX_PAGE;
     }
 

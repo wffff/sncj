@@ -23,7 +23,6 @@ public class IndexController {
     @RequestMapping("securedPage")
 //    @Secured(value = {"ROLE_ADMIN"})
     public String securedPage() {
-        System.out.println(SecurityUserUtils.getSecurityUserName());
         return "securedPage";
     }
 
