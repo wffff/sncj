@@ -1,17 +1,18 @@
 package com.sncj.core.auth_center.service.impl;
 
-import com.sncj.core.baseconfig.BasePage;
-import com.sncj.core.baseconfig.utils.RegexUtils;
 import com.sncj.core.auth_center.dto.PermissionDTO;
 import com.sncj.core.auth_center.entity.PermissionEntity;
 import com.sncj.core.auth_center.entity.RoleEntity;
 import com.sncj.core.auth_center.entity.UserEntity;
+import com.sncj.core.auth_center.enums.PermissionTypeEnum;
 import com.sncj.core.auth_center.exception.PermissionException;
 import com.sncj.core.auth_center.repository.IPermissionRepository;
 import com.sncj.core.auth_center.service.IPermissionService;
 import com.sncj.core.auth_center.service.IUserService;
+import com.sncj.core.baseconfig.utils.RegexUtils;
 import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -29,34 +30,65 @@ public class PermissionService implements IPermissionService {
     private IPermissionRepository iPermissionRepository;
     @Resource
     private IUserService iUserService;
-    @Override
-    public Page<PermissionEntity> pagePermissionByConditions(BasePage basePage) {
-        PermissionEntity permissionEntity=new PermissionEntity();
-        permissionEntity.setDel(false);
-        return iPermissionRepository.findAll(Example.of(permissionEntity),basePage.getRequestPage());
-    }
 
     @Override
     public List<PermissionEntity> listPermissionByConditions() {
-        PermissionEntity permissionEntity=new PermissionEntity();
+        PermissionEntity permissionEntity = new PermissionEntity();
         permissionEntity.setDel(false);
-        return iPermissionRepository.findAll(Example.of(permissionEntity));
+        return iPermissionRepository.findAll(Example.of(permissionEntity), new Sort(Sort.Direction.ASC, "id"));
     }
 
     @Override
-    public List<PermissionEntity> createPermission(String name, String description, String url, Integer pid, String method) {
-        if (!RegexUtils.notNull(name)){
-            throw new PermissionException("权限名字为空");
+    public List<PermissionEntity> createPermission(String name, String url, Integer pid, PermissionTypeEnum permissionType) {
+        PermissionEntity permissionEntity = new PermissionEntity();
+        PermissionEntity parent=iPermissionRepository.findOne(pid);
+        //如果是最大的菜单
+        if (pid==null&&permissionType==PermissionTypeEnum.MENU){
+            List<PermissionEntity> list=listMenuAndPidNULL();
+            if (null==list||list.size()==0){
+                permissionEntity.setModuleSort(1);
+            }else {
+                permissionEntity.setModuleSort(list.get(0).getModuleSort() + 1);
+            }
+            permissionEntity.setMenuSort(0);
+            permissionEntity.setTabSort(0);
+            permissionEntity.setFuncSort(0);
+        }else if (permissionType==PermissionTypeEnum.MENU){
+            List<PermissionEntity> list=listMenuAndPidNOTNULL(pid);
+            if (null==list||list.size()==0){
+                permissionEntity.setMenuSort(1);
+            }else {
+                permissionEntity.setMenuSort(list.get(0).getMenuSort()+1);
+            }
+            permissionEntity.setModuleSort(parent.getModuleSort());
+            permissionEntity.setTabSort(0);
+            permissionEntity.setFuncSort(0);
+        }else if (permissionType==PermissionTypeEnum.TABS){
+            List<PermissionEntity> list=listTabs(pid);
+            if (null==list||list.size()==0){
+                permissionEntity.setTabSort(1);
+            }else {
+                permissionEntity.setTabSort(list.get(0).getTabSort()+1);
+            }
+            permissionEntity.setModuleSort(parent.getModuleSort());
+            permissionEntity.setMenuSort(parent.getMenuSort());
+            permissionEntity.setFuncSort(0);
+        }else if (permissionType==PermissionTypeEnum.FUNC){
+            List<PermissionEntity> list=listFunc(pid);
+            if (null==list||list.size()==0){
+                permissionEntity.setFuncSort(1);
+            }else {
+                permissionEntity.setFuncSort(list.get(0).getFuncSort()+1);
+            }
+            permissionEntity.setModuleSort(parent.getModuleSort());
+            permissionEntity.setMenuSort(parent.getMenuSort());
+            permissionEntity.setTabSort(parent.getTabSort());
+
         }
-        if (!RegexUtils.isRole(name)){
-            throw new PermissionException("权限名字需要以ROLE_开头");
-        }
-        PermissionEntity permissionEntity=new PermissionEntity();
         permissionEntity.setName(name);
-        permissionEntity.setDescription(description);
+        permissionEntity.setType(permissionType);
         permissionEntity.setUrl(url);
         permissionEntity.setPid(pid);
-        permissionEntity.setMethod(method);
         return iPermissionRepository.saveAll(List.of(permissionEntity));
     }
 
@@ -76,6 +108,26 @@ public class PermissionService implements IPermissionService {
         });
         permissionDTOS.removeAll(ll);
         return permissionDTOS;
+    }
+
+    @Override
+    public List<PermissionEntity> listMenuAndPidNULL() {
+        return iPermissionRepository.listByCondition(true,null,PermissionTypeEnum.MENU);
+    }
+
+    @Override
+    public List<PermissionEntity> listMenuAndPidNOTNULL(Integer permissionId) {
+        return iPermissionRepository.listByCondition(null,permissionId,PermissionTypeEnum.MENU);
+    }
+
+    @Override
+    public List<PermissionEntity> listTabs(Integer permissionId) {
+        return iPermissionRepository.listByCondition(null,permissionId,PermissionTypeEnum.TABS);
+    }
+
+    @Override
+    public List<PermissionEntity> listFunc(Integer permissionId) {
+        return iPermissionRepository.listByCondition(null,permissionId,PermissionTypeEnum.FUNC);
     }
 
 }

@@ -27,6 +27,8 @@
                             </div>
                         </div>
                         <div th:if="${tab.url=='user'}" th:replace="user/user"></div>
+                        <div th:if="${tab.url=='role'}" th:replace="user/role"></div>
+                        <div th:if="${tab.url=='permission'}" th:replace="user/permission"></div>
 
 
                     </div>
@@ -63,6 +65,32 @@
     <div class="layui-form-item">
         <div class="layui-input-block">
             <button type="button" class="layui-btn" lay-submit lay-filter="userFormSubmit">立即提交</button>
+        </div>
+    </div>
+</form>
+
+<form th:id="permissionForm" action="" class="layui-form" style="margin:30px 50px 0px 0px; display: none">
+    <div class=" layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">资源名称</label>
+            <div class="layui-input-inline">
+                <input type="text" name="name" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">url</label>
+            <div class="layui-input-inline">
+                <input type="text" name="url" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <input type="hidden" name="pid" autocomplete="off" class="layui-input">
+    <input type="hidden" name="permissionType" autocomplete="off" class="layui-input">
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="button" class="layui-btn" lay-submit lay-filter="permissionFormSubmit">立即提交</button>
         </div>
     </div>
 </form>

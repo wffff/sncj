@@ -1,12 +1,12 @@
 <!--suppress ThymeleafVariablesResolveInspection -->
-<html th:if="${tab.url == 'user'}" xmlns:th="http://www.thymeleaf.org">
+<html th:if="${tab.url == 'role'}" xmlns:th="http://www.thymeleaf.org">
 
 <div id="user" >
     <div class="inSearch">
         <div class="allSearch">
             <div class="layui-inline">
                 <input name="name" required="" lay-verify="required"
-                       placeholder="用户名称" autocomplete="off" class="layui-input input-qu">
+                       placeholder="角色名称" autocomplete="off" class="layui-input input-qu">
             </div>
         </div>
         <div class="layui-input-inline right">
@@ -25,15 +25,15 @@
 
         //方法级渲染
         table.render({
-            id: 'user'
-            , elem: '#user'
-            , url: '/passport/user/page'
+            id: 'role'
+            , elem: '#role'
+            , url: '/passport/role/page'
             , cols: [
                 [
                     {checkbox: true, fixed: true}
                     , {field: 'id', title: 'ID', width: 80}
-                    , {field: 'username', title: '用户名', width: 80}
-                    , {field: 'name', title: '用户名称', width: 80}
+                    , {field: 'name', title: '角色名称', width: 80}
+                    , {field: 'description', title: '角色描述', width: 80}
                 ]
             ]
             , page: true

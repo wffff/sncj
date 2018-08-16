@@ -104,8 +104,10 @@ insert into t_user_role(user_id, role_Id) values (1,1);
 insert into t_role(name, description) values ('Role_Admin','系统管理员');
 insert into t_permission(name, url, pid, icon_cls,menu_sort,tab_sort,func_sort,module_sort,type) values ('用户中心','#',null ,'span_navL05',0,0,0,1,0);
 insert into t_permission(name, url, pid, icon_cls,menu_sort,tab_sort,func_sort,module_sort,type) values ('用户管理','user/manage',1 ,null ,1,0,0,1,0);
-insert into t_permission(name, url, pid, icon_cls,menu_sort,tab_sort,func_sort,module_sort,type) values ('用户','user',1 ,null ,1,1,0,1,1);
-insert into t_permission(name, url, pid, icon_cls,menu_sort,tab_sort,func_sort,module_sort,type) values ('增加','userAdd',1 ,null ,1,1,1,1,2);
+insert into t_permission(name, url, pid, icon_cls,menu_sort,tab_sort,func_sort,module_sort,type) values ('用户','user',2 ,null ,1,1,0,1,1);
+insert into t_permission(name, url, pid, icon_cls,menu_sort,tab_sort,func_sort,module_sort,type) values ('增加','userAdd',3 ,null ,1,1,1,1,2);
+insert into t_permission(name, url, pid, icon_cls,menu_sort,tab_sort,func_sort,module_sort,type) values ('角色','role',2 ,null ,1,2,0,1,1);
+insert into t_permission(name, url, pid, icon_cls,menu_sort,tab_sort,func_sort,module_sort,type) values ('权限','permission',2 ,null ,1,3,0,1,1);
 insert into t_role_permission(role_id, permission_id) values (1,1);
 
 insert into t_organization(parent_id, organization_type, name, company_name, description, memo)values (null ,0,'集团','测试集团','测试','没啥') --1

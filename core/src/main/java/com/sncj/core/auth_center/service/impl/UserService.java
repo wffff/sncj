@@ -94,12 +94,9 @@ public class UserService implements IUserService,UserDetailsService {
         if (user != null) {
             Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
             for (RoleEntity role:user.getRole()){
-                for (PermissionEntity permission:role.getPermission()){
-                    if (permission != null && permission.getName() != null) {
-                        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(permission.getName());
-                        //1：此处将权限信息添加到 GrantedAuthority 对象中，在后面进行全权限验证时会使用GrantedAuthority 对象。
-                        grantedAuthorities.add(grantedAuthority);
-                    }
+                if (role != null && role.getName() != null) {
+                GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(role.getName());
+                grantedAuthorities.add(grantedAuthority);
                 }
             }
             return new UserEntity(user.getId(),user.getUsername(), user.getPassword(),user.getEnabled(),grantedAuthorities);

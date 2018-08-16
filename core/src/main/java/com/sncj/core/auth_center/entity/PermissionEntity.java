@@ -143,4 +143,5 @@ public class PermissionEntity extends BaseEntity {
     public void setFuncSort(Integer funcSort) {
         this.funcSort = funcSort;
     }
+
 }
