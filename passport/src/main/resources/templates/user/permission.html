@@ -19,9 +19,14 @@
 </div>
 <script type="text/html" id="oper-col">
     <a class="layui-btn layui-btn layui-btn-xs" lay-event="addChild">新增子项</a>
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="update">修改</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
+<div class="layui-btn-group" style="padding-top: 10px">
+    <button class="layui-btn" id="btn-expand">全部展开</button>
+    <button class="layui-btn" id="btn-fold">全部折叠</button>
+    <button class="layui-btn" id="btn-refresh">刷新表格</button>
+</div>
 <table class="page-table" th:id="${tab.url}" th:attr="lay-filter=${tab.url}"></table>
 
 <script>
@@ -68,10 +73,42 @@
         };
        renderTable();
         var active = {
+            permissionAdd:function () {
+                $("#permissionAddForm input[name='pid']").val(null);
+                $("#permissionAddForm input[name='permissionType']").val('MENU');
+                layer.open({
+                    type: 1
+                    , title: ['资源创建', 'font-size:18px;']
+                    , closeBtn: 1
+                    , area: ['450px', '300px']
+                    , maxmin: true  //最大最小化
+                    , id: 'LAY_layui_permissionAddForm' //设定一个id，防止重复弹出
+                    , content: $('#permissionAddForm')
+                    , resize: true
+                    , shadeClose: true
+                });
+            }
         };
-        form.on("submit(permissionFormSubmit)", function (data) {
+        form.on("submit(permissionAddFormSubmit)", function (data) {
             $.ajax({
                 url: '/passport/permission/add',
+                method: 'POST',
+                data: data.field,
+                success: function (data) {
+                    if (data.code >= 0) {
+                        layer.closeAll();
+                        renderTable();
+                        layer.msg(data.msg, {time: 1000});
+                    } else {
+                        layer.msg(data.msg);
+                    }
+                }
+            });
+            return false;
+        });
+        form.on("submit(permissionUpdateFormSubmit)", function (data) {
+            $.ajax({
+                url: '/passport/permission/update',
                 method: 'POST',
                 data: data.field,
                 success: function (data) {
@@ -89,14 +126,46 @@
         table.on('tool(permission)', function (obj) {
             var data = obj.data;
             var layEvent = obj.event;
-
             if (layEvent === 'del') {
-                layer.msg('删除' + data.id);
-            } else if (layEvent === 'edit') {
-                layer.msg('修改' + data.id);
+                layer.confirm('确认要删除吗？', {
+                    btn : [ '确定', '取消' ]//按钮
+                }, function(index) {
+                    layer.close(index);
+                    $.ajax({
+                        url: '/passport/permission/remove',
+                        method: 'POST',
+                        data: {id:data.id},
+                        success: function (data) {
+                            if (data.code >= 0) {
+                                layer.closeAll();
+                                renderTable();
+                                layer.msg(data.msg, {time: 1000});
+                            } else {
+                                layer.msg(data.msg, {
+                                    time: 20000, //20s后自动关闭
+                                    btn: ['明白了']
+                                });
+                            }
+                        }
+                    });
+                });
+            } else if (layEvent === 'update') {
+                $("#permissionUpdateForm input[name='id']").val(data.id);
+                $("#permissionUpdateForm input[name='name']").val(data.name);
+                $("#permissionUpdateForm input[name='url']").val(data.url);
+                layer.open({
+                    type: 1
+                    , title: ['资源创建', 'font-size:18px;']
+                    , closeBtn: 1
+                    , area: ['450px', '300px']
+                    , maxmin: true  //最大最小化
+                    , id: 'LAY_layui_permissionUpdateForm' //设定一个id，防止重复弹出
+                    , content: $('#permissionUpdateForm')
+                    , resize: true
+                    , shadeClose: true
+                });
             } else if (layEvent == 'addChild') {
-                $("#permissionForm input[name='pid']").val(data.id);
-                console.log(data.type);
+                $("#permissionAddForm input[name='pid']").val(data.id);
                 var type;
                 if (data.pid==null&&data.type=='MENU'){
                     type='MENU';
@@ -108,15 +177,15 @@
                     layer.msg("不支持的操作", {time: 1000});
                     return;
                 }
-                $("#permissionForm input[name='permissionType']").val(type);
+                $("#permissionAddForm input[name='permissionType']").val(type);
                 layer.open({
                     type: 1
                     , title: ['资源创建', 'font-size:18px;']
                     , closeBtn: 1
                     , area: ['450px', '300px']
                     , maxmin: true  //最大最小化
-                    , id: 'LAY_layui_permissionForm' //设定一个id，防止重复弹出
-                    , content: $('#permissionForm')
+                    , id: 'LAY_layui_permissionAddForm' //设定一个id，防止重复弹出
+                    , content: $('#permissionAddForm')
                     , resize: true
                     , shadeClose: true
                 });
@@ -125,6 +194,17 @@
         $('.layui-btn').on('click', function () {
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
+        });
+        $('#btn-expand').click(function () {
+            treetable.expandAll('#permission');
+        });
+
+        $('#btn-fold').click(function () {
+            treetable.foldAll('#permission');
+        });
+
+        $('#btn-refresh').click(function () {
+            renderTable();
         });
     });
 </script>

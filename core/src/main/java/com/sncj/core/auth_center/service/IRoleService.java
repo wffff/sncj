@@ -1,7 +1,7 @@
 package com.sncj.core.auth_center.service;
 
-import com.sncj.core.baseconfig.BasePage;
 import com.sncj.core.auth_center.entity.RoleEntity;
+import com.sncj.core.baseconfig.BasePage;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -18,4 +18,10 @@ public interface IRoleService {
 
     //创建角色
     List<RoleEntity> createRole(String name, String description);
+
+    RoleEntity findById(Integer id);
+
+    RoleEntity update(RoleEntity r);
+
+    RoleEntity enabled(Integer roleId, Integer permissionId, boolean enabled);
 }

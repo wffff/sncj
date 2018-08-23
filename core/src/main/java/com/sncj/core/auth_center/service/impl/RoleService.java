@@ -1,5 +1,7 @@
 package com.sncj.core.auth_center.service.impl;
 
+import com.sncj.core.auth_center.entity.PermissionEntity;
+import com.sncj.core.auth_center.service.IPermissionService;
 import com.sncj.core.baseconfig.BasePage;
 import com.sncj.core.baseconfig.utils.RegexUtils;
 import com.sncj.core.auth_center.entity.RoleEntity;
@@ -20,6 +22,8 @@ import java.util.List;
 public class RoleService implements IRoleService {
     @Resource
     private IRoleRepository iRoleRepository;
+    @Resource
+    private IPermissionService iPermissionService;
 
     @Override
     public Page<RoleEntity> pageRoleByConditions(BasePage basePage) {
@@ -44,5 +48,27 @@ public class RoleService implements IRoleService {
         roleEntity.setName(name);
         roleEntity.setDescription(description);
         return iRoleRepository.saveAll(List.of(roleEntity));
+    }
+
+    @Override
+    public RoleEntity findById(Integer id) {
+        return iRoleRepository.findOne(id);
+    }
+
+    @Override
+    public RoleEntity update(RoleEntity r) {
+        return iRoleRepository.update(r);
+    }
+
+    @Override
+    public RoleEntity enabled(Integer roleId, Integer permissionId, boolean enabled) {
+        RoleEntity r=findById(roleId);
+        PermissionEntity p=iPermissionService.findOne(permissionId);
+        if (enabled){
+            r.getPermission().add(p);
+        }else {
+            r.getPermission().remove(p);
+        }
+        return iRoleRepository.update(r);
     }
 }

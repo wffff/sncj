@@ -46,6 +46,25 @@ public class PermissionDTO extends TreeUtils.BaseTreeGrid {
         return TreeUtils.formatTree(dtoList, false);
     }
 
+    public static List<PermissionEntity> formatResourceEntity(List<PermissionDTO> list) {
+        List<PermissionEntity> reList = new ArrayList<>();
+        if (list != null) {
+            for (PermissionDTO dto : list) {
+                PermissionEntity pidResource = null;
+                if (dto.getParentId() != null) {
+                    pidResource = new PermissionEntity();
+                    pidResource.setId(dto.getParentId());
+                }
+                PermissionEntity entity = new PermissionEntity(pidResource != null ? pidResource.getId() : null, dto.getType(),
+                        dto.getName(),dto.getUrl(),dto.getIcon(),dto.getSort(),dto.getSort(),dto.getSort(),dto.getSort());
+                entity.setId(dto.getId());
+                reList.add(entity);
+                reList.addAll(formatResourceEntity(dto.getChildren()));
+            }
+        }
+        return reList;
+    }
+
     public PermissionDTO(Integer id, Integer parentId, String icon, int sort, boolean spread, PermissionTypeEnum type,
                          String parentName, String name, String url) {
         super(id, parentId, icon, sort, spread);

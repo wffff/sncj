@@ -1,6 +1,5 @@
 package com.sncj.web.controller;
 
-import com.sncj.core.baseconfig.utils.SecurityUserUtils;
 import com.sncj.core.auth_center.service.IUserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +20,7 @@ public class IndexController {
     }
 
     @RequestMapping("securedPage")
-//    @Secured(value = {"ROLE_ADMIN"})
+//    @Secured(value = {"ROLE_TOP"})
     public String securedPage() {
         return "securedPage";
     }

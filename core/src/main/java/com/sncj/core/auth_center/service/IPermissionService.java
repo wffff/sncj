@@ -2,6 +2,7 @@ package com.sncj.core.auth_center.service;
 
 import com.sncj.core.auth_center.dto.PermissionDTO;
 import com.sncj.core.auth_center.entity.PermissionEntity;
+import com.sncj.core.auth_center.entity.RoleEntity;
 import com.sncj.core.auth_center.enums.PermissionTypeEnum;
 
 import java.util.List;
@@ -26,4 +27,10 @@ public interface IPermissionService {
     List<PermissionEntity> listTabs(Integer permissionId);
     //查找某个资源的子功能
     List<PermissionEntity> listFunc(Integer permissionId);
+
+    PermissionEntity updatePermission(Integer id, String name, String url);
+
+    boolean removePermission(Integer id);
+
+    PermissionEntity findOne(Integer permissionId);
 }
