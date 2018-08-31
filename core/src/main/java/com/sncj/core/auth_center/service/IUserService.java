@@ -1,5 +1,6 @@
 package com.sncj.core.auth_center.service;
 
+import com.sncj.core.auth_center.entity.RoleEntity;
 import com.sncj.core.baseconfig.BasePage;
 import com.sncj.core.auth_center.entity.UserEntity;
 import org.springframework.data.domain.Page;
@@ -20,4 +21,10 @@ public interface IUserService {
     UserEntity findByName(String username);
 
     UserEntity add(String username, String password, String name);
+
+    UserEntity enabled(Integer userId, Integer roleId, boolean enabled);
+
+    UserEntity findById(Integer id);
+
+    List<UserEntity> findAll();
 }

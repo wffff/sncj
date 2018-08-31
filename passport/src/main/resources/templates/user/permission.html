@@ -1,22 +1,6 @@
 <!--suppress ThymeleafVariablesResolveInspection -->
 <html th:if="${tab.url == 'permission'}" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-
-<div id="user">
-    <div class="inSearch">
-        <div class="allSearch">
-            <div class="layui-inline">
-                <input name="name" required="" lay-verify="required"
-                       placeholder="用户名称" autocomplete="off" class="layui-input input-qu">
-            </div>
-        </div>
-        <div class="layui-input-inline right">
-            <button sec:authorize="hasRole('ROLE_TEST')" class="layui-btn layui-btn-sm layui-btn-primary"
-                    data-type="userReload">查询
-            </button>
-        </div>
-    </div>
-</div>
+>
 <script type="text/html" id="oper-col">
     <a class="layui-btn layui-btn layui-btn-xs" lay-event="addChild">新增子项</a>
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="update">修改</a>
@@ -37,7 +21,7 @@
         var treetable = layui.treetable;
         var layer = layui.layer;
 
-        var renderTable=function(){
+        var renderTable = function () {
             layer.load(2);
             treetable.render({
                 treeColIndex: 1,
@@ -71,9 +55,9 @@
                 }
             });
         };
-       renderTable();
+        renderTable();
         var active = {
-            permissionAdd:function () {
+            permissionAdd: function () {
                 $("#permissionAddForm input[name='pid']").val(null);
                 $("#permissionAddForm input[name='permissionType']").val('MENU');
                 layer.open({
@@ -128,13 +112,13 @@
             var layEvent = obj.event;
             if (layEvent === 'del') {
                 layer.confirm('确认要删除吗？', {
-                    btn : [ '确定', '取消' ]//按钮
-                }, function(index) {
+                    btn: ['确定', '取消']//按钮
+                }, function (index) {
                     layer.close(index);
                     $.ajax({
                         url: '/passport/permission/remove',
                         method: 'POST',
-                        data: {id:data.id},
+                        data: {id: data.id},
                         success: function (data) {
                             if (data.code >= 0) {
                                 layer.closeAll();
@@ -167,13 +151,13 @@
             } else if (layEvent == 'addChild') {
                 $("#permissionAddForm input[name='pid']").val(data.id);
                 var type;
-                if (data.pid==null&&data.type=='MENU'){
-                    type='MENU';
-                }else if (data.type=='MENU'){
-                    type='TABS';
-                } else if (data.type=='TABS'){
-                    type='FUNC';
-                }else {
+                if (data.pid == null && data.type == 'MENU') {
+                    type = 'MENU';
+                } else if (data.type == 'MENU') {
+                    type = 'TABS';
+                } else if (data.type == 'TABS') {
+                    type = 'FUNC';
+                } else {
                     layer.msg("不支持的操作", {time: 1000});
                     return;
                 }

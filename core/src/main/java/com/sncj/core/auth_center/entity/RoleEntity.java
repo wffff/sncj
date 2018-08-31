@@ -25,6 +25,9 @@ public class RoleEntity extends BaseEntity {
     @Where(clause = "del = false")
     private Set<PermissionEntity> permission = new HashSet<>();
 
+    @Transient
+    private boolean enabled=false;
+
     public RoleEntity() {
     }
 
@@ -61,5 +64,13 @@ public class RoleEntity extends BaseEntity {
 
     public String getDescription() {
         return description;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

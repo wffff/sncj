@@ -23,7 +23,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             ,"/role/**"
             ,"/user/**"
             ,"/permission/**"
-            ,"/test/**"
             ,"/menus/**"
             ,"/main/**"
     };

@@ -1,7 +1,7 @@
 <!--suppress ThymeleafVariablesResolveInspection -->
 <html th:if="${tab.url == 'user'}" xmlns:th="http://www.thymeleaf.org">
 
-<div id="user" >
+<div id="user">
     <div class="inSearch">
         <div class="allSearch">
             <div class="layui-inline">
@@ -15,10 +15,14 @@
         </div>
     </div>
 </div>
+<script type="text/html" id="switchTplRole">
+    <input type="checkbox" name="enabled" value="{{d.id}}" lay-skin="switch" lay-text="是|否"
+           lay-filter="grantBtnRole" {{ d.enabled ? 'checked' : ''}} />
+</script>
 <table class="page-table" th:id="${tab.url}" th:attr="lay-filter=${tab.url}"></table>
 
 <script>
-    layui.use(['table', 'jquery','form'], function () {
+    layui.use(['table', 'jquery', 'form'], function () {
         var table = layui.table;
         var $ = layui.jquery;
         var form = layui.form;
@@ -68,24 +72,85 @@
                     //     layer.setTop(layero); //重点2
                     // }
                 });
+            },
+            grantRole: function () {
+                var checkStatus = table.checkStatus('user')
+                    , data = checkStatus.data;
+                if (data.length === 1) {
+                    $("#grantRoleForm input[name='id']").val(data[0].id);
+                    table.render({
+                        elem: '#grantRoleTable'
+                        , url: '/passport/role/getByUserId'
+                        , where: {id: data[0].id}
+                        , width: 1200
+                        , cols: [
+                            [
+                                {
+                                    field: 'id', title: '序号', width: 90, align: 'center'
+                                }
+                                , {field: 'name', title: '角色名', width: 90}
+                                , {field: 'description', title: '描述', width: 90}
+                                , {field: 'enabled', title: '授权', width: 85, templet: '#switchTplRole'}
+                            ]
+                        ]
+                        , page: false
+                        , done: function (res, curr, count) {
+                            this.elem.next().find("tr").dblclick(function (e) {
+                                $(this).find('.layui-form-checkbox').click();
+                            });
+                        }
+                    });
+                    layer.open({
+                        type: 1
+                        , title: ['角色分配', 'font-size:18px;']
+                        , closeBtn: 1
+                        , area: ['750px', '500px']
+                        , maxmin: true  //最大最小化
+                        , id: 'LAY_layui_grantRoleForm' //设定一个id，防止重复弹出
+                        , content: $('#grantRoleForm')
+                        , resize: true
+                        , shadeClose: true
+                        , maxmin: true
+                    });
+                } else {
+                    layer.msg("只能选择一项", {time: 2000});
+                }
             }
         };
-        form.on("submit(userFormSubmit)",function (data) {
+        form.on("submit(userFormSubmit)", function (data) {
             $.ajax({
-                url:'/passport/user/add',
-                method:'POST',
-                data:data.field,
-                success:function (data) {
-                    if (data.code>=0){
+                url: '/passport/user/add',
+                method: 'POST',
+                data: data.field,
+                success: function (data) {
+                    if (data.code >= 0) {
                         layer.closeAll();
                         table.reload('user');
-                        layer.msg(data.msg,{time:1000});
-                    }else {
+                        layer.msg(data.msg, {time: 1000});
+                    } else {
                         layer.msg(data.msg);
                     }
                 }
             });
             return false;
+        });
+        form.on('switch(grantBtnRole)', function (obj) {
+            $.ajax({
+                url: '/passport/role/grant',
+                data: {
+                    userId: $("#grantRoleForm input[name='id']").val(),
+                    enabled: obj.elem.checked,
+                    roleId: this.value
+                },
+                success: function (res) {
+                    if (res.code >= 0) {
+                        layer.tips('已' + (obj.elem.checked ? '' : '取消') + '授权',
+                            obj.othis,{zIndex: layer.zIndex});
+                    } else {
+                        layer.msg(res.msg, {zIndex: layer.zIndex})
+                    }
+                }
+            });
         });
 
         $('.layui-btn').on('click', function () {

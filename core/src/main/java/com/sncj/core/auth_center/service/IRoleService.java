@@ -24,4 +24,6 @@ public interface IRoleService {
     RoleEntity update(RoleEntity r);
 
     RoleEntity enabled(Integer roleId, Integer permissionId, boolean enabled);
+
+    List<RoleEntity> findAll();
 }

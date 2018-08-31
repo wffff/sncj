@@ -1,8 +1,11 @@
 package com.sncj.passport.controller;
 
 import com.sncj.core.auth_center.dto.PermissionDTO;
+import com.sncj.core.auth_center.entity.TestEntity;
 import com.sncj.core.auth_center.enums.PermissionTypeEnum;
+import com.sncj.core.auth_center.repository.ITestRepository;
 import com.sncj.core.auth_center.service.IPermissionService;
+import com.sncj.core.baseconfig.ReturnMessage;
 import com.sncj.core.baseconfig.constants.WebConstants;
 import com.sncj.core.baseconfig.utils.RegexUtils;
 import com.sncj.core.baseconfig.utils.SecurityUserUtils;
@@ -26,6 +29,8 @@ import java.util.Map;
 public class IndexController {
     @Resource
     private IPermissionService iPermissionService;
+    @Resource
+    private ITestRepository iTestRepository;
 
     @RequestMapping("/")
     public String index() {
@@ -53,6 +58,15 @@ public class IndexController {
         request.getSession().setAttribute("tabs", menus.get("tabs"));
         request.getSession().setAttribute("menus", menus.get("menus"));
         return WebConstants.INDEX_PAGE;
+    }
+
+    @ResponseBody
+    @RequestMapping("test")
+    public ReturnMessage<TestEntity> test(String name) {
+        TestEntity t = new TestEntity();
+        t.setName(name);
+        TestEntity save = iTestRepository.save(t);
+        return ReturnMessage.success(0,save);
     }
 
     @ResponseBody

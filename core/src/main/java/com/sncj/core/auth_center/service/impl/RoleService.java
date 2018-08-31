@@ -71,4 +71,9 @@ public class RoleService implements IRoleService {
         }
         return iRoleRepository.update(r);
     }
+
+    @Override
+    public List<RoleEntity> findAll() {
+        return iRoleRepository.findAll();
+    }
 }
