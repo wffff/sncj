@@ -31,10 +31,10 @@
         table.render({
             id: 'role'
             , elem: '#role'
-            , url: '/passport/role/page'
+            , url: '/role/page'
             , cols: [
                 [
-                    {checkbox: true, fixed: true}
+                    {type: 'radio'}
                     , {field: 'id', title: 'ID', width: 80}
                     , {field: 'name', title: '角色名称', width: 80}
                     , {field: 'description', title: '角色描述', width: 80}
@@ -76,60 +76,57 @@
             grantPermission: function () {
                 var checkStatus = table.checkStatus('role')
                     , data = checkStatus.data;
-                if (data.length === 1) {
-                    $("#grantPermissionForm input[name='id']").val(data[0].id);
-                    table.render({
-                        elem: '#grantTable'
-                        , url: '/passport/permission/getByRoleId'
-                        , where: {id: data[0].id}
-                        , width: 1200
-                        , cols: [
-                            [
+                console.log(data);
+                $("#grantPermissionForm input[name='id']").val(data[0].id);
+                table.render({
+                    elem: '#grantTable'
+                    , url: '/permission/getByRoleId'
+                    , where: {id: data[0].id}
+                    , width: 1200
+                    , cols: [
+                        [
                             {
                                 field: 'id', title: '序号', width: 90, align: 'center'
                             }
-                            , {field: 'name', title: '资源名',width:90}
-                            , {field: 'url', title: '访问地址',width:90}
+                            , {field: 'name', title: '资源名', width: 90}
+                            , {field: 'url', title: '访问地址', width: 90}
                             , {
-                                field: 'type', width: 80, align: 'center', templet: function (d) {
-                                    if (d.type == 'MENU') {
-                                        return '<span class="layui-badge layui-bg-green">菜单</span>';
-                                    } else if (d.type == 'FUNC') {
-                                        return '<span class="layui-badge layui-bg-blue">功能</span>';
-                                    } else if (d.type == 'TABS') {
-                                        return '<span class="layui-badge-rim">选项卡</span>';
-                                    }
-                                }, title: '类型'
-                            }, {field: 'enabled', title: '授权', width: 85, templet: '#switchTpl'}
+                            field: 'type', width: 80, align: 'center', templet: function (d) {
+                                if (d.type == 'MENU') {
+                                    return '<span class="layui-badge layui-bg-green">菜单</span>';
+                                } else if (d.type == 'FUNC') {
+                                    return '<span class="layui-badge layui-bg-blue">功能</span>';
+                                } else if (d.type == 'TABS') {
+                                    return '<span class="layui-badge-rim">选项卡</span>';
+                                }
+                            }, title: '类型'
+                        }, {field: 'enabled', title: '授权', width: 85, templet: '#switchTpl'}
                         ]
-                        ]
-                        , page: false
-                        , done: function (res, curr, count) {
-                            this.elem.next().find("tr").dblclick(function (e) {
-                                $(this).find('.layui-form-checkbox').click();
-                            });
-                        }
-                    });
-                    layer.open({
-                        type: 1
-                        , title: ['权限分配', 'font-size:18px;']
-                        , closeBtn: 1
-                        , area: ['750px', '500px']
-                        , maxmin: true  //最大最小化
-                        , id: 'LAY_layui_grantPermissionForm' //设定一个id，防止重复弹出
-                        , content: $('#grantPermissionForm')
-                        , resize: true
-                        , shadeClose: true
-                        ,maxmin: true
-                    });
-                } else {
-                    layer.msg("只能选择一项", {time: 2000});
-                }
+                    ]
+                    , page: false
+                    , done: function (res, curr, count) {
+                        this.elem.next().find("tr").dblclick(function (e) {
+                            $(this).find('.layui-form-checkbox').click();
+                        });
+                    }
+                });
+                layer.open({
+                    type: 1
+                    , title: ['权限分配', 'font-size:18px;']
+                    , closeBtn: 1
+                    , area: ['750px', '500px']
+                    , maxmin: true  //最大最小化
+                    , id: 'LAY_layui_grantPermissionForm' //设定一个id，防止重复弹出
+                    , content: $('#grantPermissionForm')
+                    , resize: true
+                    , shadeClose: true
+                    , maxmin: true
+                });
             }
         };
         form.on("submit(userFormSubmit)", function (data) {
             $.ajax({
-                url: '/passport/user/add',
+                url: '/user/add',
                 method: 'POST',
                 data: data.field,
                 success: function (data) {
@@ -147,7 +144,7 @@
 
         form.on('switch(grantBtn)', function (obj) {
             $.ajax({
-                url: '/passport/permission/grant',
+                url: '/permission/grant',
                 data: {
                     roleId: $("#grantPermissionForm input[name='id']").val(),
                     enabled: obj.elem.checked,
@@ -156,7 +153,7 @@
                 success: function (res) {
                     if (res.code >= 0) {
                         layer.tips('已' + (obj.elem.checked ? '' : '取消') + '授权',
-                            obj.othis,{zIndex: layer.zIndex});
+                            obj.othis, {zIndex: layer.zIndex});
                     } else {
                         layer.msg(res.msg, {zIndex: layer.zIndex})
                     }

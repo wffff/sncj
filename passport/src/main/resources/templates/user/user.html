@@ -31,10 +31,11 @@
         table.render({
             id: 'user'
             , elem: '#user'
-            , url: '/passport/user/page'
+            ,toolbar:true
+            , url: '/user/page'
             , cols: [
                 [
-                    {checkbox: true, fixed: true}
+                    {type: 'radio'}
                     , {field: 'id', title: 'ID', width: 80}
                     , {field: 'username', title: '用户名', width: 80}
                     , {field: 'name', title: '用户名称', width: 80}
@@ -76,50 +77,46 @@
             grantRole: function () {
                 var checkStatus = table.checkStatus('user')
                     , data = checkStatus.data;
-                if (data.length === 1) {
-                    $("#grantRoleForm input[name='id']").val(data[0].id);
-                    table.render({
-                        elem: '#grantRoleTable'
-                        , url: '/passport/role/getByUserId'
-                        , where: {id: data[0].id}
-                        , width: 1200
-                        , cols: [
-                            [
-                                {
-                                    field: 'id', title: '序号', width: 90, align: 'center'
-                                }
-                                , {field: 'name', title: '角色名', width: 90}
-                                , {field: 'description', title: '描述', width: 90}
-                                , {field: 'enabled', title: '授权', width: 85, templet: '#switchTplRole'}
-                            ]
+                $("#grantRoleForm input[name='id']").val(data[0].id);
+                table.render({
+                    elem: '#grantRoleTable'
+                    , url: '/role/getByUserId'
+                    , where: {id: data[0].id}
+                    , width: 1200
+                    , cols: [
+                        [
+                            {
+                                field: 'id', title: '序号', width: 90, align: 'center'
+                            }
+                            , {field: 'name', title: '角色名', width: 90}
+                            , {field: 'description', title: '描述', width: 90}
+                            , {field: 'enabled', title: '授权', width: 85, templet: '#switchTplRole'}
                         ]
-                        , page: false
-                        , done: function (res, curr, count) {
-                            this.elem.next().find("tr").dblclick(function (e) {
-                                $(this).find('.layui-form-checkbox').click();
-                            });
-                        }
-                    });
-                    layer.open({
-                        type: 1
-                        , title: ['角色分配', 'font-size:18px;']
-                        , closeBtn: 1
-                        , area: ['750px', '500px']
-                        , maxmin: true  //最大最小化
-                        , id: 'LAY_layui_grantRoleForm' //设定一个id，防止重复弹出
-                        , content: $('#grantRoleForm')
-                        , resize: true
-                        , shadeClose: true
-                        , maxmin: true
-                    });
-                } else {
-                    layer.msg("只能选择一项", {time: 2000});
-                }
+                    ]
+                    , page: false
+                    , done: function (res, curr, count) {
+                        this.elem.next().find("tr").dblclick(function (e) {
+                            $(this).find('.layui-form-checkbox').click();
+                        });
+                    }
+                });
+                layer.open({
+                    type: 1
+                    , title: ['角色分配', 'font-size:18px;']
+                    , closeBtn: 1
+                    , area: ['750px', '500px']
+                    , maxmin: true  //最大最小化
+                    , id: 'LAY_layui_grantRoleForm' //设定一个id，防止重复弹出
+                    , content: $('#grantRoleForm')
+                    , resize: true
+                    , shadeClose: true
+                    , maxmin: true
+                });
             }
         };
         form.on("submit(userFormSubmit)", function (data) {
             $.ajax({
-                url: '/passport/user/add',
+                url: '/user/add',
                 method: 'POST',
                 data: data.field,
                 success: function (data) {
@@ -136,7 +133,7 @@
         });
         form.on('switch(grantBtnRole)', function (obj) {
             $.ajax({
-                url: '/passport/role/grant',
+                url: '/role/grant',
                 data: {
                     userId: $("#grantRoleForm input[name='id']").val(),
                     enabled: obj.elem.checked,
@@ -145,7 +142,7 @@
                 success: function (res) {
                     if (res.code >= 0) {
                         layer.tips('已' + (obj.elem.checked ? '' : '取消') + '授权',
-                            obj.othis,{zIndex: layer.zIndex});
+                            obj.othis, {zIndex: layer.zIndex});
                     } else {
                         layer.msg(res.msg, {zIndex: layer.zIndex})
                     }

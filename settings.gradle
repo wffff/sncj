@@ -1,5 +1,5 @@
 rootProject.name = 'tech'
 include 'core'
-include 'web'
+//include 'web'
 include 'libs'
 include 'passport'

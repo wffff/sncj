@@ -29,7 +29,7 @@
                 treeIdName: 'id',
                 treePidName: 'pid',
                 elem: '#permission',
-                url: '/passport/permission/list',
+                url: '/permission/list',
                 page: false,
                 cols: [
                     [
@@ -75,7 +75,7 @@
         };
         form.on("submit(permissionAddFormSubmit)", function (data) {
             $.ajax({
-                url: '/passport/permission/add',
+                url: '/permission/add',
                 method: 'POST',
                 data: data.field,
                 success: function (data) {
@@ -92,7 +92,7 @@
         });
         form.on("submit(permissionUpdateFormSubmit)", function (data) {
             $.ajax({
-                url: '/passport/permission/update',
+                url: '/permission/update',
                 method: 'POST',
                 data: data.field,
                 success: function (data) {
@@ -116,7 +116,7 @@
                 }, function (index) {
                     layer.close(index);
                     $.ajax({
-                        url: '/passport/permission/remove',
+                        url: '/permission/remove',
                         method: 'POST',
                         data: {id: data.id},
                         success: function (data) {
