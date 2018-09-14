@@ -1,7 +1,7 @@
 spring:
   datasource:
     druid:
-     url: jdbc:postgresql://118.25.193.38:5432/sncj
+     url: jdbc:postgresql://47.96.92.163:5432/sncj
      username: postgres
      password: 123
      driver-class-name: org.postgresql.Driver
