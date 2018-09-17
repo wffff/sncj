@@ -60,14 +60,14 @@ public class IndexController {
         return WebConstants.INDEX_PAGE;
     }
 
-    @ResponseBody
-    @RequestMapping("test")
-    public ReturnMessage<TestEntity> test(String name) {
-        TestEntity t = new TestEntity();
-        t.setName(name);
-        TestEntity save = iTestRepository.save(t);
-        return ReturnMessage.success(0,save);
-    }
+//    @ResponseBody
+//    @RequestMapping("test")
+//    public ReturnMessage<TestEntity> test(String name) {
+//        TestEntity t = new TestEntity();
+//        t.setName(name);
+//        TestEntity save = iTestRepository.save(t);
+//        return ReturnMessage.success(0,save);
+//    }
 
     @ResponseBody
     @RequestMapping("/menus")

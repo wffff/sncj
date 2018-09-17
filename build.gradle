@@ -41,9 +41,9 @@ project(':libs') {
         compile(
                 /*  javaEE 依赖   */
                 "javax.mail:mail:${javaxMailVersion}",
-                "javax.xml.bind:jaxb-api:${javaXmlBindVersion}", //#解决因java9模块化产生的找不到类的异常
-                "com.sun.xml.bind:jaxb-core:${javaXmlBindVersion}", //#解决因java9模块化产生的找不到类的异常
-                "com.sun.xml.bind:jaxb-impl:${javaXmlBindVersion}", //#解决因java9模块化产生的找不到类的异常
+                "org.glassfish.jaxb:jaxb-runtime:${javaXmlBindVersion}", //#解决因java9模块化产生的找不到类的异常
+                "org.glassfish.jaxb:jaxb-xjc:${javaXmlBindVersion}", //#解决因java9模块化产生的找不到类的异常
+                "org.glassfish.jaxb:jaxb-core:${javaXmlBindVersion}", //#解决因java9模块化产生的找不到类的异常
 
                 "org.springframework.boot:spring-boot-starter-web:${springBootVersion}",
                 "org.springframework.boot:spring-boot-starter-web-services:${springBootVersion}",
@@ -67,6 +67,9 @@ project(':libs') {
                 "com.alibaba:druid-spring-boot-starter:${alibabaDruidVersion}",
 
                 "org.projectlombok:lombok:${lombokVersion}",
+
+                "org.mongodb:mongo-java-driver:${mongodbVERSION}",
+
         )
     }
 }

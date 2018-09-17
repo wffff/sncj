@@ -1,0 +1,37 @@
+<!--suppress ThymeleafVariablesResolveInspection -->
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="content">
+<div class="layui-body">
+    <div class="page-title-box">
+        <h4 class="page-title">测试</h4>
+        <div class="clearfix"></div>
+    </div>
+    <div class="BM-com clearfix">
+        <div class="row-fluid BM-box-t0">
+            <div class="layui-tab layui-tab-brief" lay-filter="tabs">
+                <ul class="layui-tab-title">
+                    <li th:class="${Stat.first?'layui-this':''}" th:each="tab,Stat : ${tabs}"
+                        th:text="${tab.name}" th:attr="lay-id=${tab.url}"> 选项卡
+                    </li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item" th:classappend="${Stat.first?'layui-show':''}"
+                         th:each="tab,Stat : ${tabs}">
+                        <div class="functionalArea">
+                            <div class="functionalButton">
+                                <button class="layui-btn layui-btn-sm layui-btn-normal" th:classappend="${function.url}"
+                                        th:each="function,Stat : ${func}"
+                                        th:if="${tab.id == function.parentId}"
+                                        th:attr="data-type=${function.url}"
+                                        th:text="${function.name}">功能按钮
+                                </button>
+                            </div>
+                        </div>
+                        <div th:if="${tab.url=='test'}" th:replace="test/test"></div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
